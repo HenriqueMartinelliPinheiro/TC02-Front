@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
     event.preventDefault();
     try {
       const data = await login(username, password);
-      console.log('Login bem-sucedido', data);
+      // Redirecionar ou realizar outras ações após o login bem-sucedido
     } catch (err) {
       setError('Nome de usuário ou senha incorretos');
     }
