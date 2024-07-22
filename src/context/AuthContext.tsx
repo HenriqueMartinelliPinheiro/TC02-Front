@@ -8,6 +8,7 @@ interface AuthContextData {
   accessToken: string | null;
   refreshToken: string | null;
   isAccessTokenValid: () => boolean;
+  loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -20,6 +21,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
@@ -29,7 +31,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     if (storedAccessToken && storedRefreshToken && storedAccessTokenExpiresAt && storedRefreshTokenExpiresAt) {
       const accessTokenExpiresAt = new Date(storedAccessTokenExpiresAt);
-      const refreshTokenExpiresAt = new Date(storedRefreshTokenExpiresAt);
 
       const isTokenValid = accessTokenExpiresAt > new Date();
       if (isTokenValid) {
@@ -40,6 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         logout();
       }
     }
+    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -72,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, refreshToken, isAccessTokenValid }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, refreshToken, isAccessTokenValid, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
+import { ListEventsPage } from './pages/ListEventsPage';
 
 const App: React.FC = () => {
   return (
@@ -12,9 +13,9 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<PrivateRoute />}>
-            // Rotas privadas
+            <Route path='/home' element={<HomePage />}/>
+            <Route path='/eventos' element={<ListEventsPage />}/>
           </Route>
-          <Route path='/homePage' element={<HomePage />}/>
         </Routes>
       </Router>
     </AuthProvider>

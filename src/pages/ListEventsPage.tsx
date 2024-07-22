@@ -3,7 +3,7 @@ import { EventTable } from '../components/table/eventTable';
 import { CreateEventButton } from '../components/CreateEventButton';
 import { useFetchEvents } from '../hooks/useFetchEvents';
 
-export const EventPage: React.FC = () => {
+export const ListEventsPage: React.FC = () => {
   const { events, loading, error } = useFetchEvents();
 
   if (loading) {

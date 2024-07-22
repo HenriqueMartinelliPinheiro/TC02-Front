@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import Input from '../components/login/Input';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await login(username, password);
-      console.log('Login bem-sucedido');
-      // Redirecionar ou realizar outras ações após o login bem-sucedido
+      navigate('/home');
     } catch (err) {
-      console.log('Erro ao fazer login:', err);
       setError('Nome de usuário ou senha incorretos');
     }
   };
