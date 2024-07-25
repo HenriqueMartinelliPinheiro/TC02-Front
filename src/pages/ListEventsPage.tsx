@@ -13,9 +13,10 @@ export const ListEventsPage: React.FC = () => {
   if (error) {
     return <p>Erro: {error}</p>;
   }
-
+  console.log(events);
   return (
     <div>
+      <h1>Teste</h1>
       <h1 className="text-2xl bg-green-200 my-4 px-4 py-2 rounded-lg">Eventos</h1>
       <EventTable eventList={events} />
       <CreateEventButton />
