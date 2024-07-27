@@ -50,6 +50,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('accessTokenExpiresAt', new Date(accessTokenExpiresAt).toString());
     localStorage.setItem('refreshTokenExpiresAt', new Date(refreshTokenExpiresAt).toString());
+    localStorage.setItem('userEmail', email);
+    
     setIsAuthenticated(true);
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
