@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormEvent } from '../../hooks/useFormEvent';
 import Alert from '../../utils/Alert';
-import InputField from './InputField';
-import SelectField from './SelectField';
+import InputField from './components/InputField';
+import SelectField from './components/SelectField';
 
 interface StatusOption {
   value: number;

@@ -1,11 +1,17 @@
 import React from 'react';
-import {FormEvent} from '../components/forms/FormEvent';
+import { CourseForm } from '../components/forms/CourseForm';
+import { Header } from '../utils/Header';
 
-export const CreateEventPage: React.FC = () => {
+export const CreateCoursePage: React.FC = () => {
   return (
-    <div>
-      <h1>Cadastrar Evento</h1>
-      <FormEvent />
-    </div>
+    <>
+      <Header />
+      <div className="flex bg-gray-100 flex-col items-center justify-center min-h-screen w-128">
+        <div className="w-full max-w-md bg-white py-12">
+          <h1 className="text-2xl font-bold text-center">Cadastrar Curso</h1>
+          <CourseForm />
+        </div>
+      </div>
+    </>
   );
 };

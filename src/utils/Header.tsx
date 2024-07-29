@@ -2,21 +2,10 @@ import React from 'react';
 
 export const Header: React.FC = () => {
   return (
-    <header className="bg-green-600 p-4">
-      <div className="container mx-auto">
-        <nav>
-          <ul className="flex space-x-4">
-            <li>
-              <a href="/eventos" className="text-white hover:text-gray-200 mx-4">
-                Eventos
-              </a>
-              <a href="/cadastrarEvento" className="text-white hover:text-gray-200 mx-4">
-                Cadastrar Evento
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <header className="p-4">
+        <div className="absolute top-0 left-0 w-full h-16 py-10 bg-gradient-to-l bg-green-300 flex items-center p-4">
+          <img src="/bannerIFC.png" alt="Banner IFC" className="h-16 w-auto object-contain" />
+        </div>
     </header>
   );
 };

@@ -8,9 +8,6 @@ export const HomePage: React.FC = () => {
   return (
     <> 
       <div className="relative h-screen bg-gray-200">
-        <div className="absolute top-0 left-0 w-full bg-gradient-to-l from-green-700 to-green-200 flex items-center p-4">
-          <img src="/bannerIFC.png" alt="Banner IFC" className="h-16 w-auto object-contain" />
-        </div>
         <div className="flex flex-col items-center justify-center h-full">
           <div className='mb-12'>
             <h1 className="text-2xl">Gerenciar Eventos</h1>

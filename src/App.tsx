@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
 import { ListEventsPage } from './pages/ListEventsPage';
+import {CreateCoursePage} from './pages/CreateCoursePage';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <Route element={<PrivateRoute />}>
             <Route path='/home' element={<HomePage />}/>
             <Route path='/eventos' element={<ListEventsPage />}/>
+            <Route path='/criarCurso' element={<CreateCoursePage />}/>
           </Route>
         </Routes>
       </Router>
