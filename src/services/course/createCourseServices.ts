@@ -1,4 +1,4 @@
-import { API_ROUTES } from "../config/apiConfig";
+import { API_ROUTES } from "../../config/apiConfig";
 
 export const createCourse = async (courseName: string, courseCoordinatorEmail: string) => {
   try {

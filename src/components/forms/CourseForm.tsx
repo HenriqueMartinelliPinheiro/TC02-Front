@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import InputField from '../forms/components/InputField';
-import { createCourse } from '../../services/createCourse';
+import { createCourse } from '../../services/course/createCourseServices';
 
 interface CourseFormProps {
   initialData?: { id?: number; name: string; coordinatorEmail: string; status: number };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { EventTable } from '../components/table/eventTable';
-import { CreateEventButton } from '../components/CreateEventButton';
+import { EventTable } from '../components/table/event/eventTable';
+import { NavigateButton } from '../utils/NavigateButton';
 import { useFetchEvents } from '../hooks/useFetchEvents';
 
 export const ListEventsPage: React.FC = () => {
@@ -19,7 +19,7 @@ export const ListEventsPage: React.FC = () => {
       <h1>Teste</h1>
       <h1 className="text-2xl bg-green-200 my-4 px-4 py-2 rounded-lg">Eventos</h1>
       <EventTable eventList={events} />
-      <CreateEventButton />
+      <NavigateButton route="/cadastrarEvento" buttonText="Cadastrar Evento"/>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {FormEvent} from '../components/forms/FormEvent';
 import { useParams } from 'react-router-dom';
-import { getEvent } from '../services/eventService';
 
 export const EditEventPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,8 +9,6 @@ export const EditEventPage: React.FC = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const event = await getEvent(Number(id));
-        setInitialData({ id: event.id, name: event.name, status: event.status });
       } catch (error) {
         console.error('Erro ao buscar evento', error);
       }
