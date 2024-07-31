@@ -1,3 +1,4 @@
+import { Header } from '@/utils/Header';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +9,7 @@ export const HomePage: React.FC = () => {
   return (
     <> 
       <div className="relative h-screen bg-gray-200">
+        <Header/>
         <div className="flex flex-col items-center justify-center h-full">
           <div className='mb-12'>
             <h1 className="text-2xl">Gerenciar Eventos</h1>

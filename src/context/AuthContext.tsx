@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
-import { login as loginService } from '../services/login/loginService';
+import { login as loginService } from '@/services/login/loginService';
 
 interface AuthContextData {
   isAuthenticated: boolean;
@@ -8,6 +8,7 @@ interface AuthContextData {
   accessToken: string | null;
   refreshToken: string | null;
   isAccessTokenValid: () => boolean;
+  loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -20,6 +21,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Adicionado estado de loading
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
@@ -39,6 +41,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         logout();
       }
     }
+
+    setLoading(false); // Concluímos o carregamento dos dados de autenticação
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -73,7 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, refreshToken, isAccessTokenValid }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, refreshToken, isAccessTokenValid, loading }}>
       {children}
     </AuthContext.Provider>
   );

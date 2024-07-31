@@ -1,25 +1,25 @@
-import React from 'react';
-import { EventTable } from '../components/table/event/eventTable';
-import { NavigateButton } from '../utils/NavigateButton';
-import { useFetchEvents } from '../hooks/useFetchEvents';
+// import React from 'react';
+// import { EventTable } from '../components/table/event/eventTable';
+// import { NavigateButton } from '../utils/NavigateButton';
+// import { useFetchEvents } from '../hooks/useFetchEvents';
 
-export const ListEventsPage: React.FC = () => {
-  const { events, loading, error } = useFetchEvents();
+// export const ListEventsPage: React.FC = () => {
+//   const { events, loading, error } = useFetchEvents();
 
-  if (loading) {
-    return <p>Carregando...</p>;
-  }
+//   if (loading) {
+//     return <p>Carregando...</p>;
+//   }
 
-  if (error) {
-    return <p>Erro: {error}</p>;
-  }
-  console.log(events);
-  return (
-    <div>
-      <h1>Teste</h1>
-      <h1 className="text-2xl bg-green-200 my-4 px-4 py-2 rounded-lg">Eventos</h1>
-      <EventTable eventList={events} />
-      <NavigateButton route="/cadastrarEvento" buttonText="Cadastrar Evento"/>
-    </div>
-  );
-};
+//   if (error) {
+//     return <p>Erro: {error}</p>;
+//   }
+//   console.log(events);
+//   return (
+//     <div>
+//       <h1>Teste</h1>
+//       <h1 className="text-2xl bg-green-200 my-4 px-4 py-2 rounded-lg">Eventos</h1>
+//       <EventTable eventList={events} />
+//       <NavigateButton route="/cadastrarEvento" buttonText="Cadastrar Evento"/>
+//     </div>
+//   );
+// };
