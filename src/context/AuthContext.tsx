@@ -6,7 +6,6 @@ interface AuthContextData {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   accessToken: string | null;
-  refreshToken: string | null;
   isAccessTokenValid: () => boolean;
   loading: boolean;
 }
@@ -20,23 +19,19 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Adicionado estado de loading
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
-    const storedRefreshToken = localStorage.getItem('refreshToken');
     const storedAccessTokenExpiresAt = localStorage.getItem('accessTokenExpiresAt');
-    const storedRefreshTokenExpiresAt = localStorage.getItem('refreshTokenExpiresAt');
 
-    if (storedAccessToken && storedRefreshToken && storedAccessTokenExpiresAt && storedRefreshTokenExpiresAt) {
+    if (storedAccessToken && storedAccessTokenExpiresAt) {
       const accessTokenExpiresAt = new Date(storedAccessTokenExpiresAt);
 
       const isTokenValid = accessTokenExpiresAt > new Date();
       if (isTokenValid) {
         setIsAuthenticated(true);
         setAccessToken(storedAccessToken);
-        setRefreshToken(storedRefreshToken);
       } else {
         logout();
       }
@@ -51,7 +46,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('userEmail', email);
       setIsAuthenticated(true);
       setAccessToken(localStorage.getItem('accessToken'));
-      setRefreshToken(localStorage.getItem('refreshToken'));
     } catch (error) {
       setIsAuthenticated(false);
       throw error;
@@ -60,12 +54,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     localStorage.removeItem('accessTokenExpiresAt');
-    localStorage.removeItem('refreshTokenExpiresAt');
     setIsAuthenticated(false);
     setAccessToken(null);
-    setRefreshToken(null);
   };
 
   const isAccessTokenValid = (): boolean => {
@@ -77,7 +68,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, refreshToken, isAccessTokenValid, loading }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, accessToken, isAccessTokenValid, loading }}>
       {children}
     </AuthContext.Provider>
   );

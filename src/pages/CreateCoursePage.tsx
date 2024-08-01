@@ -10,8 +10,8 @@ export const CreateCoursePage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="flex bg-gray-100 flex-col items-center justify-center min-h-screen w-128">
-        <div className="w-full max-w-md bg-white py-12 px-4 shadow-lg rounded-lg">
+      <div className="flex flex-col items-center justify-center min-h-screen w-128">
+        <div className="w-full max-w-md py-12 px-4 shadow-lg rounded-lg">
           <h2 className="text-2xl font-bold text-center mb-6">Cadastrar Curso</h2>
           <CourseForm />
         </div>
@@ -74,10 +74,9 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData }) => {
 
         <Button 
           type="submit" 
-          className="my-4 w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">
+          className="my-4 w-full bg-green-500 py-2 px-4 rounded-lg hover:bg-green-700">
           Cadastrar Curso
         </Button>
-
      
       </form>
     </div>
