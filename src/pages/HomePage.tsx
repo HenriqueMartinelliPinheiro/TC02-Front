@@ -12,7 +12,7 @@ export const HomePage: React.FC = () => {
 				<Header />
 				<div className='flex flex-col items-center justify-center h-full'>
 					<div className='mb-12'>
-						<h1 className='text-2xl'>Gerenciar Eventos</h1>
+						<h1 className='text-2xl font-semibold'>Gerenciar Eventos</h1>
 					</div>
 					<div className='w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
 						<Button

@@ -29,12 +29,12 @@ export const LoginForm: React.FC = () => {
 
 	const navigate = useNavigate();
 
-	const onSubmit = async (
-		values: z.infer<typeof loginFormSchema>
-	) => {
+	const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
 		try {
 			await login(values.email, values.password);
 			navigate('/home');
+			values.email = '';
+			values.password = '';
 		} catch (error) {
 			if (error instanceof Error) {
 				form.setError('root', { message: error.message });
@@ -48,9 +48,7 @@ export const LoginForm: React.FC = () => {
 
 	return (
 		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className='space-y-8'>
+			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 				<FormField
 					control={form.control}
 					name='email'
@@ -58,11 +56,8 @@ export const LoginForm: React.FC = () => {
 						<FormItem>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input placeholder='email@email.com' {...field} />
+								<Input type='email' placeholder='email@email.com' {...field} />
 							</FormControl>
-							<FormDescription>
-								Este é o seu nome público.
-							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -74,20 +69,14 @@ export const LoginForm: React.FC = () => {
 						<FormItem>
 							<FormLabel>Senha</FormLabel>
 							<FormControl>
-								<Input
-									type='password'
-									placeholder='Senha'
-									{...field}
-								/>
+								<Input type='password' placeholder='Senha' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				{form.formState.errors.root && (
-					<p className='text-red-600'>
-						{form.formState.errors.root.message}
-					</p>
+					<p className='text-red-600'>{form.formState.errors.root.message}</p>
 				)}
 				<Button type='submit' className='bg-green-500'>
 					Enviar
