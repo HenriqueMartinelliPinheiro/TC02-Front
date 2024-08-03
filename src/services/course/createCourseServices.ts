@@ -5,21 +5,18 @@ export const createCourse = async (
 	courseCoordinatorEmail: string
 ) => {
 	try {
-		const accessToken = localStorage.getItem('accessToken') ?? '';
-
 		const response = await fetch(API_ROUTES.CREATE_COURSE, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'x-access-token': accessToken,
 			},
 			body: JSON.stringify({
 				courseName,
 				courseCoordinatorEmail,
 				requestEmail: localStorage.getItem('userEmail'),
 			}),
+			credentials: 'include',
 		});
-		console.log(response);
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}

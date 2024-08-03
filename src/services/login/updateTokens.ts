@@ -1,13 +1,13 @@
 export const updateTokens = async (response: Response) => {
-    try {
-    const accessTokenHeader = response.headers.get('x-access-token') ?? '';
-    const accessTokenExpirationHeader = response.headers.get('x-access-token-expiration') ?? '';
+	try {
+		const responseData = await response.json();
+		const accessTokenExpiration = responseData.accessTokenExpiration;
 
-    localStorage.setItem('accessToken', accessTokenHeader);
-    
-    localStorage.setItem('accessTokenExpiresAt', new Date(accessTokenExpirationHeader).toString());
-
-    }catch (error) {
-     throw error;   
-    }
-}
+		localStorage.setItem(
+			'accessTokenExpiresAt',
+			new Date(accessTokenExpiration).toString()
+		);
+	} catch (error) {
+		throw error;
+	}
+};

@@ -9,6 +9,7 @@ export const login = async (userEmail: string, userPassword: string) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ userEmail, userPassword }),
+			credentials: 'include',
 		});
 
 		if (!response.ok) {
@@ -18,8 +19,10 @@ export const login = async (userEmail: string, userPassword: string) => {
 			throw new Error('Erro ao fazer login');
 		}
 
-		updateTokens(response);
+		await updateTokens(response);
+
+		const cookies = document.cookie;
 	} catch (error) {
-		throw  error;
+		throw error;
 	}
 };

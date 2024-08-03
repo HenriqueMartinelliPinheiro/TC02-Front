@@ -13,7 +13,6 @@
 //   if (error) {
 //     return <p>Erro: {error}</p>;
 //   }
-//   console.log(events);
 //   return (
 //     <div>
 //       <h1>Teste</h1>

@@ -10,7 +10,6 @@
 //     const fetchEvent = async () => {
 //       try {
 //       } catch (error) {
-//         console.error('Erro ao buscar evento', error);
 //       }
 //     };
 

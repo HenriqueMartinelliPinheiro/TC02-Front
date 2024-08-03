@@ -25,6 +25,7 @@ export const CourseForm: React.FC<CourseFormProps> = () => {
 	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
 		try {
 			await createCourse(values.courseName, values.coordinatorEmail);
+			form.reset();
 		} catch (error) {
 			if (error instanceof Error) {
 				form.setError('root', { message: error.message });
