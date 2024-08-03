@@ -20,8 +20,6 @@ export const login = async (userEmail: string, userPassword: string) => {
 		}
 
 		await updateTokens(response);
-
-		const cookies = document.cookie;
 	} catch (error) {
 		throw error;
 	}

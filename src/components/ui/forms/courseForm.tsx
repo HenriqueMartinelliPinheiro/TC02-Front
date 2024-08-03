@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-
-import { createCourse } from '../../../services/course/createCourseServices';
+import React from 'react';
+import { useCreateCourse } from '../../../hooks/useCreateCourse';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -8,12 +7,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { courseFormSchema } from '@/@types/courseFormSchema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Loading } from '@/utils/loading';
 
 interface CourseFormProps {
 	initialData?: { id?: number; name: string; coordinatorEmail: string; status: number };
 }
 
 export const CourseForm: React.FC<CourseFormProps> = () => {
+	const { handleCreateCourse, isLoading, error, data, message } = useCreateCourse();
 	const form = useForm<z.infer<typeof courseFormSchema>>({
 		resolver: zodResolver(courseFormSchema),
 		defaultValues: {
@@ -23,17 +24,9 @@ export const CourseForm: React.FC<CourseFormProps> = () => {
 	});
 
 	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
-		try {
-			await createCourse(values.courseName, values.coordinatorEmail);
+		await handleCreateCourse(values.courseName, values.coordinatorEmail);
+		if (!error) {
 			form.reset();
-		} catch (error) {
-			if (error instanceof Error) {
-				form.setError('root', { message: error.message });
-			} else {
-				form.setError('root', {
-					message: 'Ocorreu um erro desconhecido',
-				});
-			}
 		}
 	};
 
@@ -67,8 +60,13 @@ export const CourseForm: React.FC<CourseFormProps> = () => {
 						)}
 					/>
 
-					<Button type='submit'>Enviar</Button>
+					<Button type='submit' disabled={isLoading}>
+						Enviar
+					</Button>
 				</form>
+				{isLoading && <Loading />}
+				{error && <p className='text-red-500'>{error}</p>}
+				{data && <p className='text-green-500'>{message}</p>}
 			</Form>
 		</div>
 	);

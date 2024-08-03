@@ -1,14 +1,11 @@
-// src/components/LoginForm.tsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { loginFormSchema } from '@/@types/loginFormSchema';
-import { login } from '@/services/login/loginService';
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -17,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 export const LoginForm: React.FC = () => {
 	const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -28,13 +26,14 @@ export const LoginForm: React.FC = () => {
 	});
 
 	const navigate = useNavigate();
+	const { login } = useAuth();
 
 	const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
 		try {
 			await login(values.email, values.password);
-			navigate('/home');
 			values.email = '';
 			values.password = '';
+			navigate('/home');
 		} catch (error) {
 			if (error instanceof Error) {
 				form.setError('root', { message: error.message });

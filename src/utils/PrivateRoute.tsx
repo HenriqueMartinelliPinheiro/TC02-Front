@@ -3,17 +3,17 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const PrivateRoute: React.FC = () => {
-  const { isAuthenticated, isAccessTokenValid, loading } = useAuth();
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+	const { isAuthenticated, isAccessTokenValid, loading } = useAuth();
 
-  if (!isAuthenticated || !isAccessTokenValid()) {
-    return <Navigate to="/login" />;
-  }
+	if (loading) {
+		return <div>Loading...</div>;
+	}
 
-  return <Outlet />;
+	if (!isAuthenticated || !isAccessTokenValid()) {
+		return <Navigate to='/login' />;
+	}
+
+	return <Outlet />;
 };
 
 export default PrivateRoute;

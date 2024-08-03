@@ -6,6 +6,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
 import { CreateCoursePage } from './pages/CreateCoursePage';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Loading } from './utils/loading';
 
 // import { ListCoursesPage } from './pages/ListCoursePage';
 
@@ -16,10 +17,11 @@ const App: React.FC = () => {
 				<Router>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
+						<Route path='/loading' element={<Loading />} />
 						<Route element={<PrivateRoute />}>
 							<Route path='/home' element={<HomePage />} />
 							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
-						</Route>  
+						</Route>
 					</Routes>
 				</Router>
 			</AuthProvider>

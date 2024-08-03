@@ -10,7 +10,6 @@ export const courseService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'x-access-token': accessToken,
         },
       });
 
