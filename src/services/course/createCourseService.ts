@@ -13,7 +13,6 @@ export const createCourse = async (
 			body: JSON.stringify({
 				courseName,
 				courseCoordinatorEmail,
-				requestEmail: localStorage.getItem('userEmail'),
 			}),
 			credentials: 'include',
 		});

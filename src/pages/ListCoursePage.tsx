@@ -1,59 +1,15 @@
-// import React, { useState, useEffect } from 'react';
-// import { CourseTable } from '../components/table/course/courseTable';
-// import { NavigateButton } from '../utils/NavigateButton';
-// import { courseService } from '../services/course/fetchAllCoursesService'; // Certifique-se de que o caminho está correto
+import React from 'react';
+import { CourseTable } from '../components/tables/courses/CourseTable';
+import { Header } from '@/utils/Header';
 
-// interface Course {
-//   id: number;
-//   name: string;
-//   coordinatorEmail: string;
-// }
+const ListCoursesPage: React.FC = () => {
+	return (
+		<div>
+			<Header />
+			<h2 className='mt-24 text-center'>Cursos</h2>
+			<CourseTable />
+		</div>
+	);
+};
 
-// export const ListCoursesPage: React.FC = () => {
-//   const [courses, setCourses] = useState<Course[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchCourses = async () => {
-//       try {
-//         const courses = await courseService.fetchAllCourses();
-//         setCourses(courses);
-//         setLoading(false);
-//       } catch (err) {
-//         setError('Erro ao buscar cursos');
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchCourses();
-//   }, []);
-
-//   const handleCreate = () => {
-   
-//   };
-
-//   const handleEdit = (id: number) => {
-   
-//   };
-
-//   const handleView = (id: number) => {
-   
-//   };
-
-//   if (loading) {
-//     return <p>Carregando...</p>;
-//   }
-
-//   if (error) {
-//     return <p>Erro: {error}</p>;
-//   }
-
-//   return (
-//     <div>
-//       <h1 className="text-2xl bg-blue-200 my-4 px-4 py-2 rounded-lg">Cursos</h1>
-//       <CourseTable courses={courses} onCreate={handleCreate} onEdit={handleEdit} onView={handleView} />
-//       <NavigateButton route="/cadastrarCurso" buttonText="Cadastrar Curso" />
-//     </div>
-//   );
-// };
+export default ListCoursesPage;

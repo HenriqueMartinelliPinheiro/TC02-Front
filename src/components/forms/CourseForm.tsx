@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreateCourse } from '../../../hooks/useCreateCourse';
+import { useCreateCourse } from '../../hooks/useCreateCourse';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { courseFormSchema } from '@/@types/courseFormSchema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Loading } from '@/utils/loading';
+import { Loading } from '@/utils/Loading';
 
 interface CourseFormProps {
 	initialData?: { id?: number; name: string; coordinatorEmail: string; status: number };

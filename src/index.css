@@ -35,10 +35,29 @@
       --button-hover-bg: var(--primary-foreground);
       --button-hover-fg: var(--primary);
     }
-
     h1 {
       @apply text-[color:var(--foreground)];
     }
+
+    .data-table {
+      background-color: rgb(226, 226, 226);
+    }
+
+    h2 {
+      @apply text-[color:var(--foreground)];
+      font-size: 1.5rem;
+      font-weight: 600;
+  }
+
+  .dark .data-table {
+    background-color: rgb(74, 70, 70);
+  }
+
+ .dark h2 {
+  @apply text-[color:var(--background)];
+  font-size: 1.5rem;
+    font-weight: 600;
+}
   
     .dark h1 {
       @apply text-[color:var(--background)];
@@ -78,7 +97,7 @@
     }
 
     .loading {
-      font-size: 5em;
+      font-size: 2em;
       color: rgb(46, 42, 42);
       font-weight: bold;
       text-align: center;
