@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { setErrorMap, z } from 'zod';
+import { z } from 'zod';
 import { courseFormSchema } from '@/@types/course/courseFormSchema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -29,10 +29,9 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 	const [courseCoordinatorEmail, setCourseCoordinatorEmail] = useState(
 		formMethods.watch('coordinatorEmail')
 	);
-	const [courseId, setCourseId] = useState(formMethods.watch('courseId'));
 
 	return (
-		<div className='max-w-sm mx-auto'>
+		<div className='max-w-sm mx-auto '>
 			{isLoading && <Loading />}
 			{error && (
 				<Alert className='text-red-500 my-4 p-2 text-center alert'>{error}</Alert>

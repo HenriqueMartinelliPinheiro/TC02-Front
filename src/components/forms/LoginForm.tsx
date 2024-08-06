@@ -77,9 +77,7 @@ export const LoginForm: React.FC = () => {
 				{form.formState.errors.root && (
 					<p className='text-red-600'>{form.formState.errors.root.message}</p>
 				)}
-				<Button type='submit' className='bg-green-500'>
-					Enviar
-				</Button>
+				<Button type='submit'>Enviar</Button>
 			</form>
 		</Form>
 	);

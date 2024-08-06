@@ -15,23 +15,19 @@ export const HomePage: React.FC = () => {
 						<h2>Gerenciar Eventos</h2>
 					</div>
 					<div className='w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
-						<Button
-							className='bg-green-500 py-6 px-4 rounded'
-							onClick={() => navigate('/eventos')}>
+						<Button className='py-6 px-4 rounded' onClick={() => navigate('/eventos')}>
 							Gerenciar Evento
 						</Button>
 						<Button
-							className=' bg-green-500 py-6 px-4 rounded'
+							className='py-6 px-4 rounded'
 							onClick={() => navigate('/cadastrarEvento')}>
 							Cadastrar Eventos
 						</Button>
-						<Button
-							className='bg-green-500 py-6 px-4 rounded'
-							onClick={() => navigate('/cursos')}>
+						<Button className='py-6 px-4 rounded' onClick={() => navigate('/cursos')}>
 							Gerenciar Cursos
 						</Button>
 						<Button
-							className='bg-green-500 py-6 px-4 rounded'
+							className='py-6 px-4 rounded'
 							onClick={() => navigate('/cadastrarCurso')}>
 							Cadastrar Cursos
 						</Button>

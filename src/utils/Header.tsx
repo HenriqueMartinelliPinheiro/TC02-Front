@@ -1,5 +1,4 @@
 import React from 'react';
-import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
@@ -20,9 +19,8 @@ export const Header: React.FC = () => {
 				</a>
 			</div>
 			<div className='absolute top-0 right-0 flex items-center p-4 space-x-2'>
-				<ModeToggle />
 				<Button
-					className='bg-green-500'
+					className=''
 					onClick={() => {
 						logout();
 						navigate('/home');

@@ -26,7 +26,7 @@ export const columns: ColumnDef<Course>[] = [
 				<Link
 					to={`../editarCurso/${row.original.courseId}`}
 					state={{ course: row.original }}>
-					<Button className='bg-blue-500'>
+					<Button variant={'edit'}>
 						<EditIcon className='pr-2' />
 						Editar
 					</Button>

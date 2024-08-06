@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { columns } from './CourseTableColumns';
 import { DataTable } from '../../../utils/DataTable';
 import { useFetchCourses } from '@/hooks/course/useFetchCourses';
@@ -46,17 +46,18 @@ export const CourseTable = () => {
 		<div className='container mx-auto py-10'>
 			<div className='flex justify-between mb-4'>
 				<Input
+					variant={'search'}
 					type='text'
 					placeholder='Pesquisar por nome ou email...'
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className='px-2 py-2 border rounded-md'
 				/>
-				<Button className='bg-green-500 mx-4'>
+				<Button className='mx-4'>
 					<Search />
 				</Button>
 				<a href='/cadastrarCurso'>
-					<Button className='bg-green-500'>
+					<Button>
 						<PlusCircle className='pr-2' />
 						Cadastrar Novo Curso
 					</Button>
@@ -69,9 +70,7 @@ export const CourseTable = () => {
 						<Button
 							key={index}
 							onClick={() => handlePageChange(index)}
-							className={`mx-1 ${
-								currentPage === index ? 'bg-green-500' : 'bg-gray-500'
-							}`}>
+							className={`mx-1 ${currentPage === index ? '' : 'bg-gray-500'}`}>
 							{index + 1}
 						</Button>
 					)

@@ -5,7 +5,6 @@ import { LoginPage } from './pages/LoginPage';
 import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
 import { CreateCoursePage } from './pages/CreateCoursePage';
-import { ThemeProvider } from '@/components/theme-provider';
 import { Loading } from './utils/Loading';
 import ListCoursesPage from './pages/ListCoursePage';
 import { EditCoursePage } from './pages/EditCoursePage';
@@ -14,22 +13,20 @@ import { EditCoursePage } from './pages/EditCoursePage';
 
 const App: React.FC = () => {
 	return (
-		<ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
-			<AuthProvider>
-				<Router>
-					<Routes>
-						<Route path='/login' element={<LoginPage />} />
-						<Route path='/loading' element={<Loading />} />
-						<Route element={<PrivateRoute />}>
-							<Route path='/home' element={<HomePage />} />
-							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
-							<Route path='/cursos' element={<ListCoursesPage />} />
-							<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
-						</Route>
-					</Routes>
-				</Router>
-			</AuthProvider>
-		</ThemeProvider>
+		<AuthProvider>
+			<Router>
+				<Routes>
+					<Route path='/login' element={<LoginPage />} />
+					<Route path='/loading' element={<Loading />} />
+					<Route element={<PrivateRoute />}>
+						<Route path='/home' element={<HomePage />} />
+						<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
+						<Route path='/cursos' element={<ListCoursesPage />} />
+						<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
+					</Route>
+				</Routes>
+			</Router>
+		</AuthProvider>
 	);
 };
 
