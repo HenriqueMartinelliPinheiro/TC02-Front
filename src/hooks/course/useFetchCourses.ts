@@ -1,6 +1,6 @@
 import { fetchCoursesService } from '@/services/course/fetchAllCoursesService';
-import { Course } from '../components/tables/courses/CourseTableColumns';
 import { useState, useEffect } from 'react';
+import { Course } from '../../components/tables/courses/CourseTableColumns';
 
 export const useFetchCourses = (): {
 	data: Course[];
@@ -15,7 +15,10 @@ export const useFetchCourses = (): {
 		const fetchData = async () => {
 			try {
 				const courses = await fetchCoursesService();
-				setData(courses);
+				const sortedCourses = courses.sort((course1: Course, course2: Course) =>
+					course1.courseName.localeCompare(course2.courseName)
+				);
+				setData(sortedCourses);
 				setError(false);
 			} catch (error) {
 				console.error('Erro ao buscar cursos:', error);

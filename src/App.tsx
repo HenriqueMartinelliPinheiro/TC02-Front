@@ -8,6 +8,7 @@ import { CreateCoursePage } from './pages/CreateCoursePage';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Loading } from './utils/Loading';
 import ListCoursesPage from './pages/ListCoursePage';
+import { EditCoursePage } from './pages/EditCoursePage';
 
 // import { ListCoursesPage } from './pages/ListCoursePage';
 
@@ -23,6 +24,7 @@ const App: React.FC = () => {
 							<Route path='/home' element={<HomePage />} />
 							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
 							<Route path='/cursos' element={<ListCoursesPage />} />
+							<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
 						</Route>
 					</Routes>
 				</Router>

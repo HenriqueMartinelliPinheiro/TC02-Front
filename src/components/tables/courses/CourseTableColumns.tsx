@@ -1,26 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { EditIcon, SearchIcon } from 'lucide-react';
+import { EditIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export type Course = {
 	courseId: number;
 	courseName: string;
-	coordinatorEmail: string;
-};
-
-const handleViewDetails = (courseId: number) => {
-	console.log('Visualizar Detalhes:', courseId);
-};
-
-const handleEdit = (courseId: number) => {
-	console.log('Editar:', courseId);
+	courseCoordinatorEmail: string;
 };
 
 export const columns: ColumnDef<Course>[] = [
-	{
-		accessorKey: 'courseId',
-		header: 'ID',
-	},
 	{
 		accessorKey: 'courseName',
 		header: 'Nome',
@@ -34,17 +23,14 @@ export const columns: ColumnDef<Course>[] = [
 		header: 'Ações',
 		cell: ({ row }) => (
 			<div className='flex justify-center space-x-2'>
-				<Button
-					onClick={() => handleViewDetails(row.original.courseId)}
-					className='bg-green-500'>
-					{' '}
-					<SearchIcon className='pr-2' />
-					Visualizar Detalhes
-				</Button>
-				<Button onClick={() => handleEdit(row.original.courseId)} className='bg-blue-500'>
-					<EditIcon className='pr-2' />
-					Editar
-				</Button>
+				<Link
+					to={`../editarCurso/${row.original.courseId}`}
+					state={{ course: row.original }}>
+					<Button className='bg-blue-500'>
+						<EditIcon className='pr-2' />
+						Editar
+					</Button>
+				</Link>
 			</div>
 		),
 	},

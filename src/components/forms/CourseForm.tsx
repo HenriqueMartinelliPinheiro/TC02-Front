@@ -1,72 +1,93 @@
-import React from 'react';
-import { useCreateCourse } from '../../hooks/useCreateCourse';
+import React, { useState } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { courseFormSchema } from '@/@types/courseFormSchema';
+import { setErrorMap, z } from 'zod';
+import { courseFormSchema } from '@/@types/course/courseFormSchema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loading } from '@/utils/Loading';
+import { Alert } from '../ui/alert';
 
 interface CourseFormProps {
-	initialData?: { id?: number; name: string; coordinatorEmail: string; status: number };
+	formMethods: UseFormReturn<z.infer<typeof courseFormSchema>>;
+	onSubmit: (values: z.infer<typeof courseFormSchema>) => Promise<void>;
+	isLoading?: boolean;
+	error: string | null;
+	data: any;
+	message: string | null;
 }
 
-export const CourseForm: React.FC<CourseFormProps> = () => {
-	const { handleCreateCourse, isLoading, error, data, message } = useCreateCourse();
-	const form = useForm<z.infer<typeof courseFormSchema>>({
-		resolver: zodResolver(courseFormSchema),
-		defaultValues: {
-			coordinatorEmail: '',
-			courseName: '',
-		},
-	});
-
-	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
-		await handleCreateCourse(values.courseName, values.coordinatorEmail);
-		if (!error) {
-			form.reset();
-		}
-	};
+export const CourseForm: React.FC<CourseFormProps> = ({
+	formMethods,
+	onSubmit,
+	isLoading,
+	error,
+	data,
+	message,
+}) => {
+	const [courseName, setCourseName] = useState(formMethods.watch('courseName'));
+	const [courseCoordinatorEmail, setCourseCoordinatorEmail] = useState(
+		formMethods.watch('coordinatorEmail')
+	);
+	const [courseId, setCourseId] = useState(formMethods.watch('courseId'));
 
 	return (
 		<div className='max-w-sm mx-auto'>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)}>
+			{isLoading && <Loading />}
+			{error && (
+				<Alert className='text-red-500 my-4 p-2 text-center alert'>{error}</Alert>
+			)}
+			{data && (
+				<Alert className='text-green-500 my-4 p-2 text-center alert'>{message}</Alert>
+			)}
+			<Form {...formMethods}>
+				<form onSubmit={formMethods.handleSubmit(onSubmit)}>
 					<FormField
-						control={form.control}
+						control={formMethods.control}
 						name='courseName'
 						render={({ field }) => (
 							<FormItem className='my-6'>
 								<FormLabel>Nome do Curso</FormLabel>
 								<FormControl>
-									<Input type='text' placeholder='Nome do Curso' {...field} />
+									<Input
+										type='text'
+										placeholder='Nome do Curso'
+										{...field}
+										value={courseName}
+										onChange={(e) => {
+											setCourseName(e.target.value);
+											formMethods.setValue('courseName', e.target.value);
+										}}
+									/>
 								</FormControl>
 							</FormItem>
 						)}
 					/>
 
 					<FormField
-						control={form.control}
+						control={formMethods.control}
 						name='coordinatorEmail'
 						render={({ field }) => (
 							<FormItem className='my-6'>
 								<FormLabel>Email do Coordenador do Curso</FormLabel>
 								<FormControl>
-									<Input type='text' placeholder='coordenador@email.com' {...field} />
+									<Input
+										type='email'
+										placeholder='coordenador@email.com'
+										{...field}
+										value={courseCoordinatorEmail}
+										onChange={(e) => {
+											setCourseCoordinatorEmail(e.target.value);
+											formMethods.setValue('coordinatorEmail', e.target.value);
+										}}
+									/>
 								</FormControl>
 							</FormItem>
 						)}
 					/>
 
-					<Button type='submit' disabled={isLoading}>
-						Enviar
-					</Button>
+					<Button type='submit'>Enviar</Button>
 				</form>
-				{isLoading && <Loading />}
-				{error && <p className='text-red-500'>{error}</p>}
-				{data && <p className='text-green-500'>{message}</p>}
 			</Form>
 		</div>
 	);

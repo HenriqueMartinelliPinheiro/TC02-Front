@@ -2,25 +2,27 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Header } from '../utils/Header';
 import { CourseForm } from '@/components/forms/CourseForm';
-import { courseFormSchema } from '@/@types/course/courseFormSchema';
+import { editCourseFormSchema } from '@/@types/course/editCourseFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useCreateCourse } from '@/hooks/course/useCreateCourse';
+import { useEditCourse } from '@/hooks/course/useEditCourse';
+import { useLocation } from 'react-router-dom';
 
-export const CreateCoursePage: React.FC = () => {
-	const { handleCreateCourse, error, data, message } = useCreateCourse();
+export const EditCoursePage: React.FC = () => {
+	const location = useLocation();
+	const { handleEditCourse, error, data, message } = useEditCourse();
 
-	const formMethods = useForm<z.infer<typeof courseFormSchema>>({
-		resolver: zodResolver(courseFormSchema),
+	const formMethods = useForm<z.infer<typeof editCourseFormSchema>>({
+		resolver: zodResolver(editCourseFormSchema),
 		defaultValues: {
-			coordinatorEmail: '',
-			courseName: '',
-			courseId: 0,
+			coordinatorEmail: location.state.course.courseCoordinatorEmail,
+			courseName: location.state.course.courseName,
+			courseId: location.state.course.courseId,
 		},
 	});
 
-	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
-		await handleCreateCourse(values.courseName, values.coordinatorEmail);
+	const onSubmit = async (values: z.infer<typeof editCourseFormSchema>) => {
+		await handleEditCourse(values.courseName, values.coordinatorEmail, values.courseId);
 		if (!error) {
 			formMethods.reset();
 		}
