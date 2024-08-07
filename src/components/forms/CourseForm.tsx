@@ -34,10 +34,10 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 		<div className='max-w-sm mx-auto '>
 			{isLoading && <Loading />}
 			{error && (
-				<Alert className='text-red-500 my-4 p-2 text-center alert'>{error}</Alert>
+				<Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>
 			)}
 			{data && (
-				<Alert className='text-green-500 my-4 p-2 text-center alert'>{message}</Alert>
+				<Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>
 			)}
 			<Form {...formMethods}>
 				<form onSubmit={formMethods.handleSubmit(onSubmit)}>

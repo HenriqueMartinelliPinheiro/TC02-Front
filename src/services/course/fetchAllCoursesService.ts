@@ -17,7 +17,6 @@ export const fetchCoursesService = async () => {
 		const data = await response.json();
 		return data.courses;
 	} catch (error) {
-		console.log('Response', error);
 		throw error;
 	}
 };

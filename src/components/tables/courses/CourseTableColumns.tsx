@@ -12,15 +12,15 @@ export type Course = {
 export const columns: ColumnDef<Course>[] = [
 	{
 		accessorKey: 'courseName',
-		header: 'Nome',
+		header: 'Name',
 	},
 	{
 		accessorKey: 'courseCoordinatorEmail',
-		header: 'Email do Coordenador',
+		header: 'Coordinator Email',
 	},
 	{
 		accessorKey: 'actions',
-		header: 'Ações',
+		header: 'Actions',
 		cell: ({ row }) => (
 			<div className='flex justify-center space-x-2'>
 				<Link
@@ -28,7 +28,7 @@ export const columns: ColumnDef<Course>[] = [
 					state={{ course: row.original }}>
 					<Button variant={'edit'}>
 						<EditIcon className='pr-2' />
-						Editar
+						Edit
 					</Button>
 				</Link>
 			</div>

@@ -6,8 +6,8 @@ export const editCourse = async (
 	courseId: number
 ) => {
 	try {
-		const response = await fetch(API_ROUTES.EDIT_COURSE, {
-			method: 'POST',
+		const response = await fetch(`${API_ROUTES.EDIT_COURSE}/${courseId}`, {
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 			},

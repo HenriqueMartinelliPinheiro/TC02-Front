@@ -8,24 +8,27 @@ import { CreateCoursePage } from './pages/CreateCoursePage';
 import { Loading } from './utils/Loading';
 import ListCoursesPage from './pages/ListCoursePage';
 import { EditCoursePage } from './pages/EditCoursePage';
+import { CourseProvider } from './context/CourseContext';
 
 // import { ListCoursesPage } from './pages/ListCoursePage';
 
 const App: React.FC = () => {
 	return (
 		<AuthProvider>
-			<Router>
-				<Routes>
-					<Route path='/login' element={<LoginPage />} />
-					<Route path='/loading' element={<Loading />} />
-					<Route element={<PrivateRoute />}>
-						<Route path='/home' element={<HomePage />} />
-						<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
-						<Route path='/cursos' element={<ListCoursesPage />} />
-						<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
-					</Route>
-				</Routes>
-			</Router>
+			<CourseProvider>
+				<Router>
+					<Routes>
+						<Route path='/login' element={<LoginPage />} />
+						<Route path='/loading' element={<Loading />} />
+						<Route element={<PrivateRoute />}>
+							<Route path='/home' element={<HomePage />} />
+							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
+							<Route path='/cursos' element={<ListCoursesPage />} />
+							<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
+						</Route>
+					</Routes>
+				</Router>
+			</CourseProvider>
 		</AuthProvider>
 	);
 };

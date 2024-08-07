@@ -5,4 +5,5 @@ export const API_ROUTES = {
 	CREATE_COURSE: `${API_BASE_URL}/createCourse`,
 	FETCH_ALL_COURSES: `${API_BASE_URL}/fetchAllCourses`,
 	EDIT_COURSE: `${API_BASE_URL}/editCourse`,
+	GET_COURSE_BY_ID: `${API_BASE_URL}/getCourse`,
 };
