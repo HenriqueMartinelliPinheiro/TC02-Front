@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Header } from '../utils/Header';
+import { Header } from '../../utils/Header';
 import { CourseForm } from '@/components/forms/CourseForm';
 import { courseFormSchema } from '@/@types/course/courseFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,6 @@ import { useCreateCourse } from '@/hooks/course/useCreateCourse';
 
 export const CreateCoursePage: React.FC = () => {
 	const { handleCreateCourse, error, data, message } = useCreateCourse();
-
 	const formMethods = useForm<z.infer<typeof courseFormSchema>>({
 		resolver: zodResolver(courseFormSchema),
 		defaultValues: {
@@ -21,7 +20,7 @@ export const CreateCoursePage: React.FC = () => {
 
 	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
 		await handleCreateCourse(values.courseName, values.coordinatorEmail);
-		if (!error) {
+		if (data) {
 			formMethods.reset();
 		}
 	};

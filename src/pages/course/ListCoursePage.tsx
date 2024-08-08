@@ -1,5 +1,5 @@
 import React from 'react';
-import { CourseTable } from '../components/tables/courses/CourseTable';
+import { CourseTable } from '../../components/tables/courses/CourseTable';
 import { Header } from '@/utils/Header';
 
 const ListCoursesPage: React.FC = () => {

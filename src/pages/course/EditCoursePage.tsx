@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { courseFormSchema } from '@/@types/course/courseFormSchema';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header } from '../utils/Header';
+import { Header } from '../../utils/Header';
 import { CourseForm } from '@/components/forms/CourseForm';
 import { useEditCourse } from '@/hooks/course/useEditCourse';
 import { API_ROUTES } from '@/config/apiConfig';
