@@ -6,4 +6,6 @@ export const API_ROUTES = {
 	FETCH_ALL_COURSES: `${API_BASE_URL}/fetchAllCourses`,
 	EDIT_COURSE: `${API_BASE_URL}/editCourse`,
 	GET_COURSE_BY_ID: `${API_BASE_URL}/getCourse`,
+	FETCH_ALL_ROLES: `${API_BASE_URL}/fetchAllRoles`,
+	CREATE_USER: `${API_BASE_URL}/createUser`,
 };

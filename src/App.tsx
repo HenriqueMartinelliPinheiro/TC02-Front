@@ -9,8 +9,7 @@ import { Loading } from './utils/Loading';
 import ListCoursesPage from './pages/course/ListCoursePage';
 import { EditCoursePage } from './pages/course/EditCoursePage';
 import { CourseProvider } from './context/CourseContext';
-
-// import { ListCoursesPage } from './pages/ListCoursePage';
+import { CreateUserPage } from './pages/user/CreateUserPage';
 
 const App: React.FC = () => {
 	return (
@@ -26,6 +25,7 @@ const App: React.FC = () => {
 							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
 							<Route path='/cursos' element={<ListCoursesPage />} />
 							<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
+							<Route path='/cadastrarUsuario' element={<CreateUserPage />} />
 						</Route>
 					</Routes>
 				</Router>
