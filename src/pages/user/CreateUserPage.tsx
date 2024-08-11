@@ -46,7 +46,7 @@ export const CreateUserPage: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className='flex items-center justify-center h-screen'>
+			<div className='flex items-center justify-center h-screen my-28'>
 				<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-card text-card-foreground'>
 					<h2 className='my-5 text-center'>Cadastrar Usuário</h2>
 					<UserForm

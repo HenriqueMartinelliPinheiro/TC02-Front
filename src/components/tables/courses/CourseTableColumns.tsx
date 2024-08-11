@@ -12,15 +12,15 @@ export type Course = {
 export const columns: ColumnDef<Course>[] = [
 	{
 		accessorKey: 'courseName',
-		header: 'Name',
+		header: 'Nome',
 	},
 	{
 		accessorKey: 'courseCoordinatorEmail',
-		header: 'Coordinator Email',
+		header: 'Email do Coordenador',
 	},
 	{
 		accessorKey: 'actions',
-		header: 'Actions',
+		header: 'Ações',
 		cell: ({ row }) => (
 			<div className='flex justify-center space-x-2'>
 				<Link
