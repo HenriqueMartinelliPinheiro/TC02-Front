@@ -8,10 +8,12 @@ import { PlusCircle, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 export const CourseTable = () => {
-	const { data, loading, error } = useFetchCourses();
 	const [currentPage, setCurrentPage] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
 	const pageSize = 15;
+	const skip = currentPage * pageSize;
+
+	const { data, loading, error, total } = useFetchCourses(skip, pageSize, searchTerm);
 
 	const handlePageChange = (pageIndex: number) => {
 		setCurrentPage(pageIndex);
@@ -28,19 +30,12 @@ export const CourseTable = () => {
 	if (error) {
 		return (
 			<div className='container mx-auto py-10'>
-				<p>Error loading courses.</p>
+				<p>Erro ao buscar Cursos</p>
 			</div>
 		);
 	}
 
-	const filteredData = data.filter(
-		(course) =>
-			course.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			course.courseCoordinatorEmail?.toLowerCase().includes(searchTerm.toLowerCase())
-	);
-
-	const startIndex = currentPage * pageSize;
-	const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+	const totalPages = Math.ceil(total / pageSize);
 
 	return (
 		<div className='container mx-auto py-10'>
@@ -63,18 +58,16 @@ export const CourseTable = () => {
 					</Button>
 				</a>
 			</div>
-			<DataTable columns={columns} data={paginatedData} />
+			<DataTable columns={columns} data={data} />
 			<div className='flex justify-center mt-4'>
-				{Array.from({ length: Math.ceil(filteredData.length / pageSize) }).map(
-					(_, index) => (
-						<Button
-							key={index}
-							onClick={() => handlePageChange(index)}
-							className={`mx-1 ${currentPage === index ? '' : 'bg-gray-500'}`}>
-							{index + 1}
-						</Button>
-					)
-				)}
+				{Array.from({ length: totalPages }).map((_, index) => (
+					<Button
+						key={index}
+						onClick={() => handlePageChange(index)}
+						className={`mx-1 ${currentPage === index ? '' : 'bg-gray-500'}`}>
+						{index + 1}
+					</Button>
+				))}
 			</div>
 		</div>
 	);

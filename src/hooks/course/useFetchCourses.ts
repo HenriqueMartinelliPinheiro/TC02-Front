@@ -2,23 +2,27 @@ import { fetchCoursesService } from '@/services/course/fetchAllCoursesService';
 import { useState, useEffect } from 'react';
 import { Course } from '../../components/tables/courses/CourseTableColumns';
 
-export const useFetchCourses = (): {
+export const useFetchCourses = (
+	skip: number,
+	take: number,
+	searchTerm: string
+): {
 	data: Course[];
 	loading: boolean;
 	error: boolean;
+	total: number;
 } => {
 	const [data, setData] = useState<Course[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
+	const [total, setTotal] = useState(0);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const courses = await fetchCoursesService();
-				const sortedCourses = courses.sort((course1: Course, course2: Course) =>
-					course1.courseName.localeCompare(course2.courseName)
-				);
-				setData(sortedCourses);
+				const { courses, total } = await fetchCoursesService(skip, take, searchTerm);
+				setData(courses);
+				setTotal(total);
 				setError(false);
 			} catch (error) {
 				console.error('Erro ao buscar cursos:', error);
@@ -29,7 +33,7 @@ export const useFetchCourses = (): {
 		};
 
 		fetchData();
-	}, []);
+	}, [skip, take, searchTerm]);
 
-	return { data, loading, error };
+	return { data, loading, error, total };
 };
