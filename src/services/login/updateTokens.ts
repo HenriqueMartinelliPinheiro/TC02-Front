@@ -1,7 +1,8 @@
-export const updateTokens = async (response: Response) => {
+import { LoginResponseData } from './loginService';
+
+export const updateTokens = async (response: LoginResponseData) => {
 	try {
-		const responseData = await response.json();
-		const accessTokenExpiration = responseData.accessTokenExpiration;
+		const accessTokenExpiration = response.accessTokenExpiration;
 
 		localStorage.setItem(
 			'accessTokenExpiresAt',

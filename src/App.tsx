@@ -20,7 +20,12 @@ const App: React.FC = () => {
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
 						<Route path='/loading' element={<Loading />} />
-						<Route element={<PrivateRoute />}>
+						{/* Role Organizador */}
+						<Route element={<PrivateRoute roles={['Organizador']} />}>
+							<Route path='/home' element={<HomePage />} />
+						</Route>
+						{/* Role Admin */}
+						<Route element={<PrivateRoute roles={['Admin']} />}>
 							<Route path='/' element={<HomePage />}></Route>
 							<Route path='/home' element={<HomePage />} />
 							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />

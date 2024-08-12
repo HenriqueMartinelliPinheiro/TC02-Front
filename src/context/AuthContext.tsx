@@ -7,6 +7,7 @@ interface AuthContextData {
 	logout: () => void;
 	isAccessTokenValid: () => boolean;
 	loading: boolean;
+	role?: string; // Adicionando role
 }
 
 interface AuthProviderProps {
@@ -18,14 +19,18 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [role, setRole] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		const storedAccessTokenExpiresAt = localStorage.getItem('accessTokenExpiresAt');
-		if (storedAccessTokenExpiresAt) {
+		const storedRole = localStorage.getItem('role');
+
+		if (storedAccessTokenExpiresAt && storedRole) {
 			const accessTokenExpiresAt = new Date(storedAccessTokenExpiresAt);
 			const isTokenValid = accessTokenExpiresAt > new Date();
 			if (isTokenValid) {
 				setIsAuthenticated(true);
+				setRole(storedRole);
 			} else {
 				logout();
 			}
@@ -35,8 +40,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 	const login = async (email: string, password: string) => {
 		try {
-			await loginService(email, password);
+			const data = await loginService(email, password);
 			localStorage.setItem('userEmail', email);
+			localStorage.setItem('role', data.user.role.roleTitle);
+			localStorage.setItem('accessTokenExpiresAt', data.accessTokenExpiration);
+			setRole(data.user.role.roleTitle);
 			setIsAuthenticated(true);
 		} catch (error) {
 			setIsAuthenticated(false);
@@ -46,7 +54,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 	const logout = () => {
 		localStorage.removeItem('accessTokenExpiresAt');
+		localStorage.removeItem('role');
 		setIsAuthenticated(false);
+		setRole(undefined);
 	};
 
 	const isAccessTokenValid = (): boolean => {
@@ -65,6 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 				logout,
 				isAccessTokenValid,
 				loading,
+				role,
 			}}>
 			{children}
 		</AuthContext.Provider>

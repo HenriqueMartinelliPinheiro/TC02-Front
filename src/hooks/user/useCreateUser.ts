@@ -23,7 +23,7 @@ export const useCreateUser = () => {
 				userRoleTitle
 			);
 			setData(result);
-			setMessage('Curso Criado com sucesso!');
+			setMessage('Usuário Criado com sucesso!');
 		} catch (err) {
 			if (err instanceof Error) {
 				setError(err.message);

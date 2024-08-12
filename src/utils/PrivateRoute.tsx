@@ -2,8 +2,12 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const PrivateRoute: React.FC = () => {
-	const { isAuthenticated, isAccessTokenValid, loading } = useAuth();
+interface PrivateRouteProps {
+	roles?: string[];
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ roles }) => {
+	const { isAuthenticated, isAccessTokenValid, loading, role } = useAuth();
 
 	if (loading) {
 		return <div>Loading...</div>;
@@ -11,6 +15,10 @@ const PrivateRoute: React.FC = () => {
 
 	if (!isAuthenticated || !isAccessTokenValid()) {
 		return <Navigate to='/login' />;
+	}
+
+	if (roles && !roles.includes(role!)) {
+		return <Navigate to='/unauthorized' />;
 	}
 
 	return <Outlet />;
