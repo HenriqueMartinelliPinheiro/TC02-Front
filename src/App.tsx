@@ -5,12 +5,14 @@ import { LoginPage } from './pages/user/LoginPage';
 import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
 import { CreateCoursePage } from './pages/course/CreateCoursePage';
-import { Loading } from './utils/Loading';
+import { DefaultWarning } from './utils/DefaultWarning';
 import ListCoursesPage from './pages/course/ListCoursePage';
 import { EditCoursePage } from './pages/course/EditCoursePage';
 import { CourseProvider } from './context/CourseContext';
 import { CreateUserPage } from './pages/user/CreateUserPage';
 import { ListUsersPage } from './pages/user/ListUsersPage';
+import { roles } from './config/RoleRoutes';
+import { Unauthorized } from './utils/Unauthorized';
 
 const App: React.FC = () => {
 	return (
@@ -19,19 +21,34 @@ const App: React.FC = () => {
 				<Router>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
-						<Route path='/loading' element={<Loading />} />
-						{/* Role Organizador */}
-						<Route element={<PrivateRoute roles={['Organizador']} />}>
+						<Route
+							path='/loading'
+							element={<DefaultWarning message='Carregando, Aguarde...' />}
+						/>
+						<Route path='/unauthorized' element={<Unauthorized />} />
+
+						<Route element={<PrivateRoute roles={roles.HOME_PAGE_ROLES} />}>
 							<Route path='/home' element={<HomePage />} />
+							<Route path='/' element={<HomePage />} />
 						</Route>
-						{/* Role Admin */}
-						<Route element={<PrivateRoute roles={['Admin']} />}>
-							<Route path='/' element={<HomePage />}></Route>
-							<Route path='/home' element={<HomePage />} />
+
+						<Route element={<PrivateRoute roles={roles.CREATE_COURSE_ROLES} />}>
 							<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
+						</Route>
+
+						<Route element={<PrivateRoute roles={roles.LIST_COURSES_ROLES} />}>
 							<Route path='/cursos' element={<ListCoursesPage />} />
+						</Route>
+
+						<Route element={<PrivateRoute roles={roles.EDIT_COURSE_ROLES} />}>
 							<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
+						</Route>
+
+						<Route element={<PrivateRoute roles={roles.CREATE_USER_ROLES} />}>
 							<Route path='/cadastrarUsuario' element={<CreateUserPage />} />
+						</Route>
+
+						<Route element={<PrivateRoute roles={roles.LIST_USERS_ROLES} />}>
 							<Route path='/usuarios' element={<ListUsersPage />} />
 						</Route>
 					</Routes>

@@ -7,7 +7,7 @@ interface AuthContextData {
 	logout: () => void;
 	isAccessTokenValid: () => boolean;
 	loading: boolean;
-	role?: string; // Adicionando role
+	role?: string;
 }
 
 interface AuthProviderProps {
@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 			localStorage.setItem('role', data.user.role.roleTitle);
 			localStorage.setItem('accessTokenExpiresAt', data.accessTokenExpiration);
 			setRole(data.user.role.roleTitle);
-			setIsAuthenticated(true);
+				setIsAuthenticated(true);
 		} catch (error) {
 			setIsAuthenticated(false);
 			throw error;

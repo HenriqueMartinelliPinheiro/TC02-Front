@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { courseFormSchema } from '@/@types/course/courseFormSchema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Loading } from '@/utils/Loading';
+import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Alert } from '../ui/alert';
 
 interface CourseFormProps {
@@ -32,7 +32,7 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 
 	return (
 		<div className='max-w-sm mx-auto '>
-			{isLoading && <Loading />}
+			{isLoading && <DefaultWarning message='Carregando...' />}
 			{error && <Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>}
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
 			<Form {...formMethods}>

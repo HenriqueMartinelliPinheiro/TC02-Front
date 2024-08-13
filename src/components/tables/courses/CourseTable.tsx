@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { columns } from './CourseTableColumns';
 import { DataTable } from '../../../utils/DataTable';
 import { useFetchCourses } from '@/hooks/course/useFetchCourses';
-import { Loading } from '@/utils/Loading';
+import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -22,7 +22,7 @@ export const CourseTable = () => {
 	if (loading) {
 		return (
 			<div className='container mx-auto py-10'>
-				<Loading />
+				<DefaultWarning message='Carregando...' />
 			</div>
 		);
 	}

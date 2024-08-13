@@ -12,7 +12,7 @@ import {
 	SelectItem,
 	SelectValue,
 } from '@/components/ui/select';
-import { Loading } from '@/utils/Loading';
+import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Alert } from '@/components/ui/alert';
 
 interface UserFormProps {
@@ -36,7 +36,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 }) => {
 	return (
 		<div className='max-w-sm mx-auto '>
-			{isLoading && <Loading />}
+			{isLoading && <DefaultWarning message='Carregando...' />}
 			{error && <Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>}
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
 			<Form {...formMethods}>

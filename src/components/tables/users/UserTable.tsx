@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { columns } from './UserTableColumns';
 import { DataTable } from '../../../utils/DataTable';
 import { useFetchUsers } from '@/hooks/user/useFetchUsers';
-import { Loading } from '@/utils/Loading';
+import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -22,7 +22,7 @@ export const UserTable = () => {
 	if (loading) {
 		return (
 			<div className='container mx-auto py-10'>
-				<Loading />
+				<DefaultWarning message='Carregando...' />
 			</div>
 		);
 	}
