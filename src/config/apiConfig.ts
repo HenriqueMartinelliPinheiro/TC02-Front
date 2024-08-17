@@ -9,4 +9,6 @@ export const API_ROUTES = {
 	FETCH_ALL_ROLES: `${API_BASE_URL}/fetchAllRoles`,
 	CREATE_USER: `${API_BASE_URL}/createUser`,
 	FETCH_ALL_USERS: `${API_BASE_URL}/fetchAllUsers`,
+	CREATE_EVENT: `${API_BASE_URL}/createEvent`,
+	FETCH_STATUS_OPTIONS: `${API_BASE_URL}/fetchAllEventStatusOptions`,
 };

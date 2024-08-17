@@ -25,7 +25,6 @@ export const useFetchUsers = (
 				setTotal(total);
 				setError(false);
 			} catch (error) {
-				console.error('Erro ao buscar usuários:', error);
 				setError(true);
 			} finally {
 				setLoading(false);

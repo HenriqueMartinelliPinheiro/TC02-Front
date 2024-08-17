@@ -5,4 +5,5 @@ export const roles = {
 	LIST_COURSES_ROLES: ['Admin', 'Organizador'],
 	CREATE_USER_ROLES: ['Admin'],
 	LIST_USERS_ROLES: ['Admin'],
+	CREATE_EVENT_ROLES: ['Admin', 'Organizador'],
 };

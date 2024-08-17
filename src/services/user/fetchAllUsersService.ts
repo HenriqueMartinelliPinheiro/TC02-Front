@@ -20,7 +20,6 @@ export const fetchUsersService = async (
 		if (!response.ok) {
 			throw new Error(data.msg);
 		}
-		console.log(data.users);
 		return { users: data.users, total: data.total };
 	} catch (error) {
 		throw error;

@@ -21,8 +21,6 @@ export const fetchCoursesService = async (
 		}
 
 		const data = await response.json();
-		console.log(data.courses);
-		console.log(data.total);
 		return { courses: data.courses, total: data.total };
 	} catch (error) {
 		throw error;

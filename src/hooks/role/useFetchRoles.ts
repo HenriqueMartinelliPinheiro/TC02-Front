@@ -22,7 +22,6 @@ export const useFetchRoles = (): {
 				setData(roles);
 				setError(false);
 			} catch (err) {
-				console.error('Erro ao buscar roles:', err);
 				setError(true);
 			} finally {
 				setLoading(false);

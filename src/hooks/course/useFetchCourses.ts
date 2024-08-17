@@ -25,7 +25,6 @@ export const useFetchCourses = (
 				setTotal(total);
 				setError(false);
 			} catch (error) {
-				console.error('Erro ao buscar cursos:', error);
 				setError(true);
 			} finally {
 				setLoading(false);

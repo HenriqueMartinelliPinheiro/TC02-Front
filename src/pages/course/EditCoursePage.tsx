@@ -47,7 +47,6 @@ export const EditCoursePage: React.FC = () => {
 						courseId: data.courseId,
 					});
 				} catch (error) {
-					console.error('Error fetching course:', error);
 				} finally {
 					setIsLoading(false);
 				}
