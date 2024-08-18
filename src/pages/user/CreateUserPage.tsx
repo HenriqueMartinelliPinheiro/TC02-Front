@@ -45,19 +45,21 @@ export const CreateUserPage: React.FC = () => {
 
 	return (
 		<>
-			<Header />
-			<div className='flex items-center justify-center h-screen my-28'>
-				<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-card text-card-foreground'>
-					<h2 className='my-5 text-center'>Cadastrar Usuário</h2>
-					<UserForm
-						formMethods={formMethods}
-						onSubmit={onSubmit}
-						error={error}
-						data={data}
-						message={message}
-						roles={roles}
-						isLoading={rolesLoading}
-					/>
+			<div className='flex flex-col items-center justify-start min-h-screen'>
+				<Header />
+				<div className='flex items-center justify-center h-screen my-28 w-full'>
+					<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-card text-card-foreground'>
+						<h2 className='my-5 text-center'>Cadastrar Usuário</h2>
+						<UserForm
+							formMethods={formMethods}
+							onSubmit={onSubmit}
+							error={error}
+							data={data}
+							message={message}
+							roles={roles}
+							isLoading={rolesLoading}
+						/>
+					</div>
 				</div>
 			</div>
 		</>

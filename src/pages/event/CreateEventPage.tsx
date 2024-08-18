@@ -17,8 +17,8 @@ export const CreateEventPage: React.FC = () => {
 			eventTitle: '',
 			eventStartDate: '',
 			eventEndDate: '',
-			courses: [],
 			eventStatus: 'Não Iniciado',
+			selectedCoursesIds: [],
 		},
 	});
 
@@ -35,9 +35,9 @@ export const CreateEventPage: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className='flex items-center justify-center h-screen my-32	'>
-				<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-card text-card-foreground'>
-					<h2 className='my-5 text-center'>Cadastrar Eventos</h2>
+			<div className='flex items-center justify-center min-h-screen mt-24'>
+				<div className='w-full max-w-7xl p-8 rounded shadow-lg bg-card text-card-foreground mx-8'>
+					<h2 className=' text-center'>Cadastrar Eventos</h2>
 					<EventForm
 						formMethods={formMethods}
 						onSubmit={onSubmit}
@@ -46,7 +46,7 @@ export const CreateEventPage: React.FC = () => {
 						message={message}
 						statusOptions={statusOptions || []}
 						courses={courses || []}
-						selectedCourseIds={[]}
+						selectedCourseIds={formMethods.getValues('selectedCoursesIds')}
 						isEditMode={false}
 					/>
 				</div>

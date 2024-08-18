@@ -10,7 +10,7 @@ export const useCreateEvent = () => {
 		eventTitle: string;
 		eventStartDate: string;
 		eventEndDate: string;
-		courses: number[];
+		selectedCoursesIds: number[];
 		eventStatus?: string;
 	}) => {
 		setError(null);

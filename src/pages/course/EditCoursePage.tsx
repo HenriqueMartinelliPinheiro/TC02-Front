@@ -81,17 +81,19 @@ export const EditCoursePage: React.FC = () => {
 
 	return (
 		<>
-			<Header />
-			<div className='flex items-center justify-center h-screen'>
-				<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-white'>
-					<h2 className='my-5 text-center'>Editar Curso</h2>
-					<CourseForm
-						formMethods={formMethods}
-						onSubmit={onSubmit}
-						error={error}
-						data={data}
-						message={message}
-					/>
+			<div className='flex flex-col items-center justify-start min-h-screen'>
+				<Header />
+				<div className='flex items-center justify-center h-screen'>
+					<div className='w-full max-w-md mx-auto p-8 rounded shadow-lg bg-white'>
+						<h2 className='my-5 text-center'>Editar Curso</h2>
+						<CourseForm
+							formMethods={formMethods}
+							onSubmit={onSubmit}
+							error={error}
+							data={data}
+							message={message}
+						/>
+					</div>
 				</div>
 			</div>
 		</>

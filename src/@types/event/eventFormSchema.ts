@@ -6,8 +6,7 @@ export const eventFormSchema = z.object({
 		.min(2, { message: 'O título do evento deve ter pelo menos 2 caracteres.' }),
 	eventStartDate: z.string(),
 	eventEndDate: z.string(),
-
-	courses: z
+	selectedCoursesIds: z
 		.array(
 			z.number().nonnegative({ message: 'O ID do curso deve ser um número positivo.' })
 		)

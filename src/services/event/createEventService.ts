@@ -4,7 +4,7 @@ export const createEvent = async (values: {
 	eventTitle: string;
 	eventStartDate: string;
 	eventEndDate: string;
-	courses: number[];
+	selectedCoursesIds: number[];
 	eventStatus?: string;
 }) => {
 	try {
