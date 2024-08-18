@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
 					/>
 				</a>
 			</div>
-			<div className='absolute top-0 right-0 flex items-center p-4 space-x-2'>
+			<div className='absolute top-1 right-0 flex items-center p-4 space-x-2'>
 				<Button
 					className=''
 					onClick={() => {

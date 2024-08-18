@@ -5,12 +5,13 @@ import { EventForm } from '@/components/forms/EventForm';
 import { eventFormSchema } from '@/@types/event/eventFormSchema';
 import { useCreateEvent } from '@/hooks/event/useCreateEvent';
 import { useFetchStatusOptions } from '@/hooks/event/useFetchStatusOptions';
-import { z } from 'zod';
 import { useFetchCourses } from '@/hooks/course/useFetchCourses';
 import { Header } from '@/utils/Header';
+import { z } from 'zod';
 
 export const CreateEventPage: React.FC = () => {
 	const { handleCreateEvent, error, data, message } = useCreateEvent();
+
 	const formMethods = useForm<z.infer<typeof eventFormSchema>>({
 		resolver: zodResolver(eventFormSchema),
 		defaultValues: {
@@ -19,6 +20,7 @@ export const CreateEventPage: React.FC = () => {
 			eventEndDate: '',
 			eventStatus: 'Não Iniciado',
 			selectedCoursesIds: [],
+			activities: [], // Inicializando atividades como array vazio
 		},
 	});
 
@@ -35,9 +37,9 @@ export const CreateEventPage: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className='flex items-center justify-center min-h-screen mt-24'>
+			<div className='flex items-center justify-center min-h-screen mt-24 mb-12'>
 				<div className='w-full max-w-7xl p-8 rounded shadow-lg bg-card text-card-foreground mx-8'>
-					<h2 className=' text-center'>Cadastrar Eventos</h2>
+					<h2 className='text-center'>Cadastrar Eventos</h2>
 					<EventForm
 						formMethods={formMethods}
 						onSubmit={onSubmit}

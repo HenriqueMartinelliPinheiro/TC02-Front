@@ -47,6 +47,14 @@ export const HomePageButtons: React.FC = () => {
 						Consultar Usuários
 					</Button>
 				)}
+
+				{roles.CREATE_EVENT_ROLES.includes(role ?? '') && (
+					<Button
+						className='py-6 px-4 rounded flex-1 max-w-[calc(25%-1rem)] min-w-[200px]'
+						onClick={() => navigate('/cadastrarEvento')}>
+						Cadastrar Eventos
+					</Button>
+				)}
 			</div>
 		</>
 	);
