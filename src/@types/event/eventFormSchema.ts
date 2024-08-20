@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const eventActivitySchema = z.object({
+	eventActivityTitle: z.string().min(2),
 	eventActivityStartDate: z
 		.string()
 		.min(1, { message: 'A data de início é obrigatória.' }),
@@ -20,5 +21,5 @@ export const eventFormSchema = z.object({
 		)
 		.min(1, { message: 'Deve haver pelo menos um curso permitido para o evento.' }),
 	eventStatus: z.string().optional(),
-	activities: z.array(eventActivitySchema).optional(),
+	eventActivities: z.array(eventActivitySchema).optional(),
 });

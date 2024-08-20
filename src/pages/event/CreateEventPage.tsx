@@ -20,7 +20,7 @@ export const CreateEventPage: React.FC = () => {
 			eventEndDate: '',
 			eventStatus: 'Não Iniciado',
 			selectedCoursesIds: [],
-			activities: [], // Inicializando atividades como array vazio
+			eventActivities: [],
 		},
 	});
 
@@ -28,7 +28,20 @@ export const CreateEventPage: React.FC = () => {
 	const { data: courses } = useFetchCourses(0, 0, '');
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
-		await handleCreateEvent(values);
+		console.log(values);
+		const adjustedValues = {
+			...values,
+			eventStartDate: new Date(`${values.eventStartDate}:00Z`),
+			eventEndDate: new Date(`${values.eventEndDate}:00Z`),
+			eventActivities:
+				values.eventActivities?.map((activity) => ({
+					...activity,
+					eventActivityStartDate: new Date(`${activity.eventActivityStartDate}:00Z`),
+					eventActivityEndDate: new Date(`${activity.eventActivityEndDate}:00Z`),
+				})) || [],
+		};
+
+		await handleCreateEvent(adjustedValues);
 		if (data) {
 			formMethods.reset();
 		}

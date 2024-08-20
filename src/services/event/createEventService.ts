@@ -1,12 +1,6 @@
 import { API_ROUTES } from '../../config/apiConfig';
 
-export const createEvent = async (values: {
-	eventTitle: string;
-	eventStartDate: string;
-	eventEndDate: string;
-	selectedCoursesIds: number[];
-	eventStatus?: string;
-}) => {
+export const createEvent = async (values: EventInterface) => {
 	try {
 		const response = await fetch(API_ROUTES.CREATE_EVENT, {
 			method: 'POST',

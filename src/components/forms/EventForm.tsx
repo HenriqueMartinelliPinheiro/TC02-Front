@@ -35,13 +35,13 @@ export const EventForm: React.FC<EventFormProps> = ({
 }) => {
 	const { fields, append, remove } = useFieldArray({
 		control: formMethods.control,
-		name: 'activities',
+		name: 'eventActivities',
 	});
 
 	React.useEffect(() => {
-		let count = 0;
 		if (fields.length === 0) {
 			append({
+				eventActivityTitle: '',
 				eventActivityDescription: '',
 				eventActivityStartDate: '',
 				eventActivityEndDate: '',
@@ -180,7 +180,25 @@ export const EventForm: React.FC<EventFormProps> = ({
 								<div key={item.id} className='space-y-4'>
 									<FormField
 										control={formMethods.control}
-										name={`activities.${index}.eventActivityDescription`}
+										name={`eventActivities.${index}.eventActivityTitle`}
+										render={({ field }) => (
+											<FormItem className='flex-1'>
+												<FormLabel>Título da Atividade</FormLabel>
+												<FormControl>
+													<Input
+														type='text'
+														placeholder='Título da Atividade'
+														{...field}
+														className='w-full'
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+
+									<FormField
+										control={formMethods.control}
+										name={`eventActivities.${index}.eventActivityDescription`}
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Descrição da Atividade</FormLabel>
@@ -194,7 +212,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 									<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
 										<FormField
 											control={formMethods.control}
-											name={`activities.${index}.eventActivityStartDate`}
+											name={`eventActivities.${index}.eventActivityStartDate`}
 											render={({ field }) => (
 												<FormItem className='flex-1'>
 													<FormLabel>Data de Início</FormLabel>
@@ -206,7 +224,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 										/>
 										<FormField
 											control={formMethods.control}
-											name={`activities.${index}.eventActivityEndDate`}
+											name={`eventActivities.${index}.eventActivityEndDate`}
 											render={({ field }) => (
 												<FormItem className='flex-1'>
 													<FormLabel>Data de Fim</FormLabel>
@@ -235,6 +253,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 											className='my-2 flex-1'
 											onClick={() =>
 												append({
+													eventActivityTitle: '',
 													eventActivityDescription: '',
 													eventActivityStartDate: '',
 													eventActivityEndDate: '',

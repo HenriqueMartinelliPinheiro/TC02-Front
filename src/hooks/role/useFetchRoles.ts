@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import { fetchRolesService } from '@/services/role/fetchRolesService';
-
-interface Role {
-	roleId: number;
-	roleTitle: string;
-}
+import { RoleInterface } from '@/interfaces/RoleInterface';
 
 export const useFetchRoles = (): {
-	data: Role[];
+	data: RoleInterface[];
 	loading: boolean;
 	error: boolean;
 } => {
-	const [data, setData] = useState<Role[]>([]);
+	const [data, setData] = useState<RoleInterface[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 

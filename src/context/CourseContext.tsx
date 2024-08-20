@@ -1,14 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface Course {
-	courseId: number;
-	courseName: string;
-	courseCoordinatorEmail: string;
-}
-
 interface CourseContextType {
-	course: Course | null;
-	setCourse: (course: Course) => void;
+	course: CourseInterface | null;
+	setCourse: (course: CourseInterface) => void;
 }
 
 const CourseContext = createContext<CourseContextType | undefined>(undefined);
@@ -22,7 +16,7 @@ export const useCourse = (): CourseContextType => {
 };
 
 export const CourseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-	const [course, setCourse] = useState<Course | null>(null);
+	const [course, setCourse] = useState<CourseInterface | null>(null);
 
 	return (
 		<CourseContext.Provider value={{ course, setCourse }}>

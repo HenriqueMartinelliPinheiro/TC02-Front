@@ -1,24 +1,9 @@
 import { API_ROUTES } from '../../config/apiConfig';
 import { updateTokens } from './updateTokens';
-
-interface RoleDomain {
-	roleTitle: string;
-	roleId: number;
-}
-
-interface UserDomain {
-	userId: number;
-	userName: string;
-	userEmail: string;
-	systemStatus: string;
-	createdAt: string;
-	updatedAt: string;
-	userPassword: string;
-	role: RoleDomain;
-}
+import { UserInterface } from '@/interfaces/UserInterface';
 
 export interface LoginResponseData {
-	user: UserDomain;
+	user: UserInterface;
 	accessTokenExpiration: string;
 }
 

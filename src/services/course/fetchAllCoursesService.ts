@@ -19,8 +19,8 @@ export const fetchCoursesService = async (
 		if (!response.ok) {
 			throw new Error('Erro na requisição');
 		}
-
 		const data = await response.json();
+
 		return { courses: data.courses, total: data.total };
 	} catch (error) {
 		throw error;
