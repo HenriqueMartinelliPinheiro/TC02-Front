@@ -22,4 +22,7 @@ export const eventFormSchema = z.object({
 		.min(1, { message: 'Deve haver pelo menos um curso permitido para o evento.' }),
 	eventStatus: z.string().optional(),
 	eventActivities: z.array(eventActivitySchema).optional(),
+	eventLatitude: z.number().min(-90).max(90),
+	eventLongitude: z.number().min(-180).max(180),
+	eventRadius: z.number().min(0),	
 });

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { Alert } from '@/components/ui/alert';
 import { eventFormSchema } from '@/@types/event/eventFormSchema';
 import { PlusCircle, XIcon } from 'lucide-react';
+import EventMap from '../utils/EventMap';
 
 interface EventFormProps {
 	formMethods: UseFormReturn<z.infer<typeof eventFormSchema>>;
@@ -71,6 +72,8 @@ export const EventForm: React.FC<EventFormProps> = ({
 				<form onSubmit={formMethods.handleSubmit(onSubmit)} className='space-y-8'>
 					<div className='flex flex-col lg:flex-row w-full'>
 						<div className='flex-1 p-4'>
+							<h3 className='text-center mb-8'>Dados do Evento</h3>
+
 							<FormField
 								control={formMethods.control}
 								name='eventTitle'
@@ -143,6 +146,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 						<div className='border-l border-gray-300'></div>
 
 						<div className='flex-1 p-4'>
+							<h3 className='text-center mb-8'>Cursos Participantes</h3>
 							<FormField
 								control={formMethods.control}
 								name='selectedCoursesIds'
@@ -176,6 +180,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 
 					<div className='flex flex-col lg:flex-row w-full mt-8'>
 						<div className='flex-1 p-4'>
+							<h3 className='text-center mb-8'>Atividades do Evento</h3>
 							{fields.map((item, index) => (
 								<div key={item.id} className='space-y-4'>
 									<FormField
@@ -265,10 +270,36 @@ export const EventForm: React.FC<EventFormProps> = ({
 								</div>
 							))}
 						</div>
-
 						<div className='border-l border-gray-300'></div>
 
-						<div className='flex-1 p-4'></div>
+						<div className='flex-1 p-4'>
+							<h3 className='text-center mb-8'>Localização do Evento</h3>
+							<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
+								<FormField
+									control={formMethods.control}
+									name='eventRadius'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Raio do Evento (em metros)</FormLabel>
+											<FormControl>
+												<Input
+													type='number'
+													placeholder='Raio'
+													{...field}
+													onChange={(e) => {
+														const radius = Number(e.target.value);
+														field.onChange(radius);
+													}}
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+							</div>
+							<span className='m-4'>
+								<EventMap formMethods={formMethods} />
+							</span>
+						</div>
 					</div>
 
 					<Button type='submit'>Enviar</Button>

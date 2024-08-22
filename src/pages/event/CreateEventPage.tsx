@@ -21,6 +21,9 @@ export const CreateEventPage: React.FC = () => {
 			eventStatus: 'Não Iniciado',
 			selectedCoursesIds: [],
 			eventActivities: [],
+			eventLatitude: undefined,
+			eventLongitude: undefined,
+			eventRadius: undefined,
 		},
 	});
 
