@@ -10,4 +10,6 @@ interface EventInterface {
 	eventTitle: string;
 	selectedCoursesIds: number[];
 	eventStatus?: string | undefined;
+	eventRadius?: number;
+	eventLatitude?: number;
 }

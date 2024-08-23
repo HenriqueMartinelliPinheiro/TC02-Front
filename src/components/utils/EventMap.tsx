@@ -9,7 +9,7 @@ interface EventMapProps {
 	formMethods: UseFormReturn<z.infer<typeof eventFormSchema>>;
 }
 
-const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
+export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 	const mapRef = useRef<HTMLDivElement | null>(null);
 	const mapInstanceRef = useRef<L.Map | null>(null);
 	const markerRef = useRef<L.Marker | null>(null);
@@ -17,43 +17,39 @@ const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 
 	useEffect(() => {
 		if (mapRef.current && !mapInstanceRef.current) {
-			const initialCoordinates: [number, number] = [-23.5505, -46.6333]; // São Paulo, Brasil
-			const map = L.map(mapRef.current).setView(initialCoordinates, 13);
+			const initialCoordinates: [number, number] = [
+				formMethods.getValues('eventLatitude') || -27.026563,
+				formMethods.getValues('eventLongitude') || -51.144409,
+			];
+			const initialRadius = formMethods.getValues('eventRadius') || 50;
 
+			// Inicializa o mapa
+			const map = L.map(mapRef.current).setView(initialCoordinates, 13);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; OpenStreetMap contributors',
 			}).addTo(map);
 
 			mapInstanceRef.current = map;
 
-			// Inicializa o círculo com um raio padrão
-			const circle = L.circle(initialCoordinates, {
-				color: 'red',
-				fillColor: '#f03',
-				fillOpacity: 0.5,
-				radius: formMethods.getValues('eventRadius') || 1000, // Raio inicial em metros
-			}).addTo(map);
+			// Adiciona marcador
+			const marker = L.marker(initialCoordinates).addTo(map);
+			markerRef.current = marker;
 
+			const circle = L.circle(initialCoordinates, {
+				color: 'green',
+				fillColor: '#0c7a0c',
+				fillOpacity: 0.5,
+				radius: initialRadius,
+			}).addTo(map);
 			circleRef.current = circle;
 
 			map.on('click', (e: L.LeafletMouseEvent) => {
 				const { lat, lng } = e.latlng;
-
-				if (markerRef.current) {
-					markerRef.current.setLatLng([lat, lng]);
-					circleRef.current?.setLatLng([lat, lng]);
-				} else {
-					markerRef.current = L.marker([lat, lng]).addTo(map);
-					circleRef.current?.setLatLng([lat, lng]);
-				}
+				marker.setLatLng([lat, lng]);
+				circle.setLatLng([lat, lng]);
 
 				formMethods.setValue('eventLatitude', lat);
 				formMethods.setValue('eventLongitude', lng);
-			});
-
-			circle.on('radiuschange', () => {
-				const radius = circle.getRadius();
-				formMethods.setValue('eventRadius', radius);
 			});
 		}
 	}, [formMethods]);
@@ -62,10 +58,9 @@ const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 		const radius = formMethods.watch('eventRadius');
 		if (circleRef.current && radius) {
 			circleRef.current.setRadius(radius);
+			formMethods.setValue('eventRadius', radius);
 		}
 	}, [formMethods.watch('eventRadius')]);
 
 	return <div ref={mapRef} style={{ height: '400px', width: '100%' }} />;
 };
-
-export default EventMap;

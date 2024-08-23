@@ -21,9 +21,9 @@ export const CreateEventPage: React.FC = () => {
 			eventStatus: 'Não Iniciado',
 			selectedCoursesIds: [],
 			eventActivities: [],
-			eventLatitude: undefined,
-			eventLongitude: undefined,
-			eventRadius: undefined,
+			eventLatitude: 0,
+			eventLongitude: 0,
+			eventRadius: 0,
 		},
 	});
 
@@ -31,17 +31,18 @@ export const CreateEventPage: React.FC = () => {
 	const { data: courses } = useFetchCourses(0, 0, '');
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
-		console.log(values);
 		const adjustedValues = {
 			...values,
 			eventStartDate: new Date(`${values.eventStartDate}:00Z`),
 			eventEndDate: new Date(`${values.eventEndDate}:00Z`),
-			eventActivities:
-				values.eventActivities?.map((activity) => ({
-					...activity,
-					eventActivityStartDate: new Date(`${activity.eventActivityStartDate}:00Z`),
-					eventActivityEndDate: new Date(`${activity.eventActivityEndDate}:00Z`),
-				})) || [],
+			eventActivities: values.eventActivities.map((activity) => ({
+				...activity,
+				eventActivityStartDate: new Date(`${activity.eventActivityStartDate}:00Z`),
+				eventActivityEndDate: new Date(`${activity.eventActivityEndDate}:00Z`),
+			})),
+			eventLatitude: values.eventLatitude,
+			eventLongitude: values.eventLongitude,
+			eventRadius: values.eventRadius,
 		};
 
 		await handleCreateEvent(adjustedValues);
@@ -49,7 +50,6 @@ export const CreateEventPage: React.FC = () => {
 			formMethods.reset();
 		}
 	};
-
 	return (
 		<>
 			<Header />

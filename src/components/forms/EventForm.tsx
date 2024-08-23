@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,8 @@ import { z } from 'zod';
 import { Alert } from '@/components/ui/alert';
 import { eventFormSchema } from '@/@types/event/eventFormSchema';
 import { PlusCircle, XIcon } from 'lucide-react';
-import EventMap from '../utils/EventMap';
+import { EventMap } from '../utils/EventMap';
+import { CheckedState } from '@radix-ui/react-checkbox';
 
 interface EventFormProps {
 	formMethods: UseFormReturn<z.infer<typeof eventFormSchema>>;
@@ -51,6 +52,8 @@ export const EventForm: React.FC<EventFormProps> = ({
 		}
 	}, [fields, append, remove]);
 
+	const [hasLocation, setHasLocation] = useState(false);
+
 	const handleCheckboxChange = (id: number) => {
 		const currentValue = formMethods.getValues('selectedCoursesIds') || [];
 		const updatedValue = currentValue.includes(id)
@@ -58,6 +61,27 @@ export const EventForm: React.FC<EventFormProps> = ({
 			: [...currentValue, id];
 
 		formMethods.setValue('selectedCoursesIds', updatedValue);
+	};
+
+	const handleLocationCheckboxChange = (checked: CheckedState) => {
+		const isChecked = checked === true;
+		setHasLocation(isChecked);
+
+		if (isChecked) {
+			formMethods.setValue(
+				'eventLatitude',
+				formMethods.getValues('eventLatitude') || -27.026563
+			);
+			formMethods.setValue(
+				'eventLongitude',
+				formMethods.getValues('eventLongitude') || -51.144409
+			);
+			formMethods.setValue('eventRadius', formMethods.getValues('eventRadius') || 50);
+		} else {
+			formMethods.setValue('eventLatitude', undefined);
+			formMethods.setValue('eventLongitude', undefined);
+			formMethods.setValue('eventRadius', undefined);
+		}
 	};
 
 	const eventStatusValue = formMethods.getValues('eventStatus');
@@ -272,33 +296,48 @@ export const EventForm: React.FC<EventFormProps> = ({
 						</div>
 						<div className='border-l border-gray-300'></div>
 
-						<div className='flex-1 p-4'>
-							<h3 className='text-center mb-8'>Localização do Evento</h3>
-							<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
-								<FormField
-									control={formMethods.control}
-									name='eventRadius'
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>Raio do Evento (em metros)</FormLabel>
-											<FormControl>
-												<Input
-													type='number'
-													placeholder='Raio'
-													{...field}
-													onChange={(e) => {
-														const radius = Number(e.target.value);
-														field.onChange(radius);
-													}}
-												/>
-											</FormControl>
-										</FormItem>
-									)}
-								/>
+						<div className='flex flex-col lg:flex-row w-full mt-8'>
+							<div className='flex-1 p-4'>
+								<h3 className='text-center mb-8'>Localização do Evento</h3>
+								<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
+									<FormField
+										control={formMethods.control}
+										name='eventRadius'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Raio do Evento (em metros)</FormLabel>
+												<FormControl>
+													<Input
+														type='number'
+														placeholder='Raio'
+														{...field}
+														onChange={(e) => {
+															const radius = Number(e.target.value);
+															field.onChange(radius);
+														}}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+
+									<div className='flex items-center relative top-4'>
+										<Checkbox
+											checked={!!hasLocation}
+											onCheckedChange={(checked) =>
+												handleLocationCheckboxChange(!!checked)
+											}
+										/>
+										<span className='ml-2'>Adicionar Localização</span>
+									</div>
+								</div>
+
+								{hasLocation && (
+									<span className='m-4'>
+										<EventMap formMethods={formMethods} />
+									</span>
+								)}
 							</div>
-							<span className='m-4'>
-								<EventMap formMethods={formMethods} />
-							</span>
 						</div>
 					</div>
 
