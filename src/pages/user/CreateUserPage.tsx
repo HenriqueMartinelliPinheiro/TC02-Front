@@ -38,10 +38,13 @@ export const CreateUserPage: React.FC = () => {
 			values.roleId,
 			values.roleTitle
 		);
+	};
+
+	useEffect(() => {
 		if (data) {
 			formMethods.reset();
 		}
-	};
+	}, [data, formMethods]);
 
 	return (
 		<>

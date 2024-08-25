@@ -55,7 +55,7 @@ export const LoginForm: React.FC = () => {
 						<FormItem>
 							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input type='email' placeholder='email@email.com' {...field} />
+								<Input type='email' required placeholder='email@email.com' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -68,7 +68,7 @@ export const LoginForm: React.FC = () => {
 						<FormItem>
 							<FormLabel>Senha</FormLabel>
 							<FormControl>
-								<Input type='password' placeholder='Senha' {...field} />
+								<Input type='password' required placeholder='Senha' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

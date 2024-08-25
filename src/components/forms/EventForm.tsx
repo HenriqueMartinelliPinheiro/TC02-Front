@@ -10,6 +10,7 @@ import { eventFormSchema } from '@/@types/event/eventFormSchema';
 import { PlusCircle, XIcon } from 'lucide-react';
 import { EventMap } from '../utils/EventMap';
 import { CheckedState } from '@radix-ui/react-checkbox';
+import { Modal } from '@/components/ui/modal';
 
 interface EventFormProps {
 	formMethods: UseFormReturn<z.infer<typeof eventFormSchema>>;
@@ -39,6 +40,29 @@ export const EventForm: React.FC<EventFormProps> = ({
 		control: formMethods.control,
 		name: 'eventActivities',
 	});
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [submitValues, setSubmitValues] = useState<z.infer<
+		typeof eventFormSchema
+	> | null>(null);
+
+	const handleFormSubmit = (values: z.infer<typeof eventFormSchema>) => {
+		setSubmitValues(values);
+		setIsModalOpen(true);
+	};
+
+	const handleConfirmSubmit = async () => {
+		if (submitValues) {
+			await onSubmit(submitValues);
+			setIsModalOpen(false);
+
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
 	React.useEffect(() => {
 		if (fields.length === 0) {
@@ -93,7 +117,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
 
 			<Form {...formMethods}>
-				<form onSubmit={formMethods.handleSubmit(onSubmit)} className='space-y-8'>
+				<form onSubmit={formMethods.handleSubmit(handleFormSubmit)} className='space-y-8'>
 					<div className='flex flex-col lg:flex-row w-full'>
 						<div className='flex-1 p-4'>
 							<h3 className='text-center mb-8'>Dados do Evento</h3>
@@ -105,7 +129,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 									<FormItem>
 										<FormLabel>Título do Evento</FormLabel>
 										<FormControl>
-											<Input type='text' placeholder='Título' {...field} />
+											<Input type='text' required placeholder='Título' {...field} />
 										</FormControl>
 									</FormItem>
 								)}
@@ -119,7 +143,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 										<FormItem className='flex-1'>
 											<FormLabel>Data de Início</FormLabel>
 											<FormControl>
-												<Input type='datetime-local' {...field} className='w-full' />
+												<Input
+													required
+													type='datetime-local'
+													{...field}
+													className='w-full'
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -131,7 +160,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 										<FormItem className='flex-1'>
 											<FormLabel>Data de Fim</FormLabel>
 											<FormControl>
-												<Input type='datetime-local' {...field} className='w-full' />
+												<Input
+													required
+													type='datetime-local'
+													{...field}
+													className='w-full'
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -215,6 +249,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 												<FormLabel>Título da Atividade</FormLabel>
 												<FormControl>
 													<Input
+														required
 														type='text'
 														placeholder='Título da Atividade'
 														{...field}
@@ -232,7 +267,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 											<FormItem>
 												<FormLabel>Descrição da Atividade</FormLabel>
 												<FormControl>
-													<Input type='text' placeholder='Descrição' {...field} />
+													<Input
+														required
+														type='text'
+														placeholder='Descrição'
+														{...field}
+													/>
 												</FormControl>
 											</FormItem>
 										)}
@@ -246,7 +286,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 												<FormItem className='flex-1'>
 													<FormLabel>Data de Início</FormLabel>
 													<FormControl>
-														<Input type='datetime-local' {...field} className='w-full' />
+														<Input
+															required
+															type='datetime-local'
+															{...field}
+															className='w-full'
+														/>
 													</FormControl>
 												</FormItem>
 											)}
@@ -258,7 +303,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 												<FormItem className='flex-1'>
 													<FormLabel>Data de Fim</FormLabel>
 													<FormControl>
-														<Input type='datetime-local' {...field} className='w-full' />
+														<Input
+															required
+															type='datetime-local'
+															{...field}
+															className='w-full'
+														/>
 													</FormControl>
 												</FormItem>
 											)}
@@ -294,6 +344,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 								</div>
 							))}
 						</div>
+
 						<div className='border-l border-gray-300'></div>
 
 						<div className='flex flex-col lg:flex-row w-full mt-8'>
@@ -341,9 +392,29 @@ export const EventForm: React.FC<EventFormProps> = ({
 						</div>
 					</div>
 
-					<Button type='submit'>Enviar</Button>
+					<Button type='submit' variant='default'>
+						Enviar
+					</Button>
 				</form>
 			</Form>
+
+			{isModalOpen && (
+				<Modal
+					title='Confirmação de Envio'
+					onClose={handleCancel}
+					actions={
+						<>
+							<Button variant='destructive' onClick={handleCancel}>
+								Cancelar
+							</Button>
+							<Button variant='default' onClick={handleConfirmSubmit}>
+								Confirmar
+							</Button>
+						</>
+					}>
+					<p>Tem certeza de que deseja enviar o formulário?</p>
+				</Modal>
+			)}
 		</div>
 	);
 };

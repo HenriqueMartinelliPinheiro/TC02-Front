@@ -62,14 +62,13 @@ export const EditCoursePage: React.FC = () => {
 
 	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
 		await handleEditCourse(values.courseName, values.coordinatorEmail, values.courseId);
+		useEffect(() => {
+			if (data) {
+				formMethods.reset();
+				navigate('/cursos');
+			}
+		}, [data, navigate, formMethods]);
 	};
-
-	useEffect(() => {
-		if (data) {
-			formMethods.reset();
-			navigate('/cursos');
-		}
-	}, [data, navigate, formMethods]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;

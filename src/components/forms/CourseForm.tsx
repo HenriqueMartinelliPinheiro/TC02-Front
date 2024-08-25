@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Alert } from '../ui/alert';
+import { Modal } from '@/components/ui/modal';
 
 interface CourseFormProps {
 	formMethods: UseFormReturn<z.infer<typeof courseFormSchema>>;
@@ -30,13 +31,36 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 		formMethods.watch('coordinatorEmail')
 	);
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [submitValues, setSubmitValues] = useState<z.infer<
+		typeof courseFormSchema
+	> | null>(null);
+
+	const handleFormSubmit = (values: z.infer<typeof courseFormSchema>) => {
+		setSubmitValues(values);
+		setIsModalOpen(true);
+	};
+
+	const handleConfirmSubmit = async () => {
+		if (submitValues) {
+			await onSubmit(submitValues);
+			setIsModalOpen(false);
+
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
+
 	return (
 		<div className='max-w-sm mx-auto '>
 			{isLoading && <DefaultWarning message='Carregando...' />}
 			{error && <Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>}
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
 			<Form {...formMethods}>
-				<form onSubmit={formMethods.handleSubmit(onSubmit)}>
+				<form onSubmit={formMethods.handleSubmit(handleFormSubmit)}>
 					<FormField
 						control={formMethods.control}
 						name='courseName'
@@ -47,6 +71,7 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 									<Input
 										type='text'
 										placeholder='Nome do Curso'
+										required
 										{...field}
 										value={courseName}
 										onChange={(e) => {
@@ -71,6 +96,7 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 										placeholder='coordenador@email.com'
 										{...field}
 										value={courseCoordinatorEmail}
+										required
 										onChange={(e) => {
 											setCourseCoordinatorEmail(e.target.value);
 											formMethods.setValue('coordinatorEmail', e.target.value);
@@ -84,6 +110,24 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 					<Button type='submit'>Enviar</Button>
 				</form>
 			</Form>
+
+			{isModalOpen && (
+				<Modal
+					title='Confirmação de Envio'
+					onClose={handleCancel}
+					actions={
+						<>
+							<Button variant='destructive' onClick={handleCancel}>
+								Cancelar
+							</Button>
+							<Button variant='default' onClick={handleConfirmSubmit}>
+								Confirmar
+							</Button>
+						</>
+					}>
+					<p>Tem certeza de que deseja enviar o formulário?</p>
+				</Modal>
+			)}
 		</div>
 	);
 };

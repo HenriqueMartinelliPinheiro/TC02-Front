@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EventForm } from '@/components/forms/EventForm';
@@ -23,7 +23,7 @@ export const CreateEventPage: React.FC = () => {
 			eventActivities: [],
 			eventLatitude: 0,
 			eventLongitude: 0,
-			eventRadius: 0,
+			eventRadius: 50,
 		},
 	});
 
@@ -46,10 +46,14 @@ export const CreateEventPage: React.FC = () => {
 		};
 
 		await handleCreateEvent(adjustedValues);
+	};
+
+	useEffect(() => {
 		if (data) {
 			formMethods.reset();
 		}
-	};
+	}, [data, formMethods]);
+
 	return (
 		<>
 			<Header />

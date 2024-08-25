@@ -35,6 +35,7 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 			const marker = L.marker(initialCoordinates).addTo(map);
 			markerRef.current = marker;
 
+			// Adiciona círculo
 			const circle = L.circle(initialCoordinates, {
 				color: 'green',
 				fillColor: '#0c7a0c',
@@ -43,6 +44,7 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 			}).addTo(map);
 			circleRef.current = circle;
 
+			// Evento de clique no mapa para mover marcador
 			map.on('click', (e: L.LeafletMouseEvent) => {
 				const { lat, lng } = e.latlng;
 				marker.setLatLng([lat, lng]);
@@ -62,5 +64,10 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 		}
 	}, [formMethods.watch('eventRadius')]);
 
-	return <div ref={mapRef} style={{ height: '400px', width: '100%' }} />;
+	return (
+		<div
+			ref={mapRef}
+			style={{ height: '400px', width: '100%', zIndex: 1, position: 'relative' }}
+		/>
+	);
 };

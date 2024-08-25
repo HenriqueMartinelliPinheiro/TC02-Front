@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { z } from 'zod';
@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Alert } from '@/components/ui/alert';
+import { Modal } from '@/components/ui/modal'; // Importação do Modal
 
 interface UserFormProps {
 	formMethods: UseFormReturn<z.infer<typeof userFormSchema>>;
@@ -34,13 +35,36 @@ export const UserForm: React.FC<UserFormProps> = ({
 	message,
 	roles,
 }) => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [submitValues, setSubmitValues] = useState<z.infer<typeof userFormSchema> | null>(
+		null
+	);
+
+	const handleFormSubmit = (values: z.infer<typeof userFormSchema>) => {
+		setSubmitValues(values);
+		setIsModalOpen(true);
+	};
+
+	const handleConfirmSubmit = async () => {
+		if (submitValues) {
+			await onSubmit(submitValues);
+			setIsModalOpen(false);
+
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
+
 	return (
 		<div className='max-w-sm mx-auto '>
 			{isLoading && <DefaultWarning message='Carregando...' />}
 			{error && <Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>}
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
 			<Form {...formMethods}>
-				<form onSubmit={formMethods.handleSubmit(onSubmit)} className='space-y-8'>
+				<form onSubmit={formMethods.handleSubmit(handleFormSubmit)} className='space-y-8'>
 					<FormField
 						control={formMethods.control}
 						name='userName'
@@ -48,7 +72,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 							<FormItem className='my-6'>
 								<FormLabel>Nome do Usuário</FormLabel>
 								<FormControl>
-									<Input type='text' placeholder='Nome' {...field} />
+									<Input required type='text' placeholder='Nome' {...field} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -61,7 +85,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 							<FormItem className='my-6'>
 								<FormLabel>Email do Usuário</FormLabel>
 								<FormControl>
-									<Input type='email' placeholder='user@email.com' {...field} />
+									<Input required type='email' placeholder='user@email.com' {...field} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -74,7 +98,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 							<FormItem className='my-6'>
 								<FormLabel>Senha</FormLabel>
 								<FormControl>
-									<Input type='password' placeholder='Senha' {...field} />
+									<Input required type='password' placeholder='Senha' {...field} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -123,6 +147,24 @@ export const UserForm: React.FC<UserFormProps> = ({
 					<Button type='submit'>Enviar</Button>
 				</form>
 			</Form>
+
+			{isModalOpen && (
+				<Modal
+					title='Confirmação de Envio'
+					onClose={handleCancel}
+					actions={
+						<>
+							<Button variant='destructive' onClick={handleCancel}>
+								Cancelar
+							</Button>
+							<Button variant='default' onClick={handleConfirmSubmit}>
+								Confirmar
+							</Button>
+						</>
+					}>
+					<p>Tem certeza de que deseja enviar o formulário?</p>
+				</Modal>
+			)}
 		</div>
 	);
 };

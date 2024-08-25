@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Header } from '../../utils/Header';
 import { CourseForm } from '@/components/forms/CourseForm';
@@ -20,10 +20,12 @@ export const CreateCoursePage: React.FC = () => {
 
 	const onSubmit = async (values: z.infer<typeof courseFormSchema>) => {
 		await handleCreateCourse(values.courseName, values.coordinatorEmail);
+	};
+	useEffect(() => {
 		if (data) {
 			formMethods.reset();
 		}
-	};
+	}, [data, formMethods]);
 
 	return (
 		<>
