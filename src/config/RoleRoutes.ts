@@ -6,4 +6,5 @@ export const roles = {
 	CREATE_USER_ROLES: ['Admin'],
 	LIST_USERS_ROLES: ['Admin'],
 	CREATE_EVENT_ROLES: ['Admin', 'Organizador'],
+	FETCH_ALL_EVENTS: ['Admin', 'Organizador'],
 };

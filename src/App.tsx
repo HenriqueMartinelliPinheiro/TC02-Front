@@ -14,6 +14,7 @@ import { ListUsersPage } from './pages/user/ListUsersPage';
 import { roles } from './config/RoleRoutes';
 import { Unauthorized } from './utils/Unauthorized';
 import { CreateEventPage } from './pages/event/CreateEventPage';
+import ListEventsPage from './pages/event/ListEventPage';
 
 const App: React.FC = () => {
 	return (
@@ -55,6 +56,10 @@ const App: React.FC = () => {
 
 						<Route element={<PrivateRoute roles={roles.CREATE_EVENT_ROLES} />}>
 							<Route path='/cadastrarEvento' element={<CreateEventPage />} />
+						</Route>
+
+						<Route element={<PrivateRoute roles={roles.FETCH_ALL_EVENTS} />}>
+							<Route path='/eventos' element={<ListEventsPage />} />
 						</Route>
 					</Routes>
 				</Router>
