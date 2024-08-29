@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -45,6 +45,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 	const [submitValues, setSubmitValues] = useState<z.infer<
 		typeof eventFormSchema
 	> | null>(null);
+	const [hasLocation, setHasLocation] = useState(false);
 
 	const handleFormSubmit = (values: z.infer<typeof eventFormSchema>) => {
 		setSubmitValues(values);
@@ -76,8 +77,6 @@ export const EventForm: React.FC<EventFormProps> = ({
 		}
 	}, [fields, append, remove]);
 
-	const [hasLocation, setHasLocation] = useState(false);
-
 	const handleCheckboxChange = (id: number) => {
 		const currentValue = formMethods.getValues('selectedCoursesIds') || [];
 		const updatedValue = currentValue.includes(id)
@@ -107,8 +106,6 @@ export const EventForm: React.FC<EventFormProps> = ({
 			formMethods.setValue('eventRadius', undefined);
 		}
 	};
-
-	const eventStatusValue = formMethods.getValues('eventStatus');
 
 	return (
 		<div className='container mx-auto py-10'>
@@ -181,7 +178,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 										<FormControl>
 											<select
 												disabled={!isEditMode}
-												value={eventStatusValue || 'Não Iniciado'}
+												value={formMethods.watch('eventStatus') || 'Não Iniciado'}
 												onChange={(e) => {
 													field.onChange(e.target.value);
 												}}
@@ -347,53 +344,49 @@ export const EventForm: React.FC<EventFormProps> = ({
 
 						<div className='border-l border-gray-300'></div>
 
-						<div className='flex flex-col lg:flex-row w-full mt-8'>
-							<div className='flex-1 p-4'>
-								<h3 className='text-center mb-8'>Localização do Evento</h3>
-								<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
-									<FormField
-										control={formMethods.control}
-										name='eventRadius'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Raio do Evento (em metros)</FormLabel>
-												<FormControl>
-													<Input
-														type='number'
-														placeholder='Raio'
-														{...field}
-														onChange={(e) => {
-															const radius = Number(e.target.value);
-															field.onChange(radius);
-														}}
-													/>
-												</FormControl>
-											</FormItem>
-										)}
+						<div className='flex-1 p-4'>
+							<h3 className='text-center mb-8'>Localização do Evento</h3>
+							<div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
+								<FormField
+									control={formMethods.control}
+									name='eventRadius'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Raio do Evento (em metros)</FormLabel>
+											<FormControl>
+												<Input
+													type='number'
+													placeholder='Raio'
+													{...field}
+													onChange={(e) => {
+														const radius = Number(e.target.value);
+														field.onChange(radius);
+													}}
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+
+								<div className='flex items-center relative top-4'>
+									<Checkbox
+										checked={!!hasLocation}
+										onCheckedChange={(checked) => handleLocationCheckboxChange(!!checked)}
 									/>
-
-									<div className='flex items-center relative top-4'>
-										<Checkbox
-											checked={!!hasLocation}
-											onCheckedChange={(checked) =>
-												handleLocationCheckboxChange(!!checked)
-											}
-										/>
-										<span className='ml-2'>Adicionar Localização</span>
-									</div>
+									<span className='ml-2'>Adicionar Localização</span>
 								</div>
-
-								{hasLocation && (
-									<span className='m-4'>
-										<EventMap formMethods={formMethods} />
-									</span>
-								)}
 							</div>
+
+							{hasLocation && (
+								<span className='m-4'>
+									<EventMap formMethods={formMethods} />
+								</span>
+							)}
 						</div>
 					</div>
 
 					<Button type='submit' variant='default'>
-						Enviar
+						{isEditMode ? 'Salvar Alterações' : 'Criar Evento'}
 					</Button>
 				</form>
 			</Form>
