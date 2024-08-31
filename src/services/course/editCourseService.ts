@@ -19,12 +19,12 @@ export const editCourse = async (
 			credentials: 'include',
 		});
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			throw new Error();
 		}
 
 		const data = await response.json();
 		return data;
 	} catch (error) {
-		throw new Error(`Erro ao Criar Curso, Resposta: ${error}`);
+		throw new Error(`Erro ao Editar Curso`);
 	}
 };

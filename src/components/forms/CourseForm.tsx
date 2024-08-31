@@ -26,11 +26,6 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 	data,
 	message,
 }) => {
-	const [courseName, setCourseName] = useState(formMethods.watch('courseName'));
-	const [courseCoordinatorEmail, setCourseCoordinatorEmail] = useState(
-		formMethods.watch('coordinatorEmail')
-	);
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [submitValues, setSubmitValues] = useState<z.infer<
 		typeof courseFormSchema
@@ -45,7 +40,6 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 		if (submitValues) {
 			await onSubmit(submitValues);
 			setIsModalOpen(false);
-
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	};
@@ -55,7 +49,7 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 	};
 
 	return (
-		<div className='max-w-sm mx-auto '>
+		<div className='max-w-sm mx-auto'>
 			{isLoading && <DefaultWarning message='Carregando...' />}
 			{error && <Alert className='text-red-500 my-4 p-2 text-center'>{error}</Alert>}
 			{data && <Alert className='text-green-500 my-4 p-2 text-center'>{message}</Alert>}
@@ -73,11 +67,7 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 										placeholder='Nome do Curso'
 										required
 										{...field}
-										value={courseName}
-										onChange={(e) => {
-											setCourseName(e.target.value);
-											formMethods.setValue('courseName', e.target.value);
-										}}
+										value={field.value || ''}
 									/>
 								</FormControl>
 							</FormItem>
@@ -95,12 +85,8 @@ export const CourseForm: React.FC<CourseFormProps> = ({
 										type='email'
 										placeholder='coordenador@email.com'
 										{...field}
-										value={courseCoordinatorEmail}
+										value={field.value || ''}
 										required
-										onChange={(e) => {
-											setCourseCoordinatorEmail(e.target.value);
-											formMethods.setValue('coordinatorEmail', e.target.value);
-										}}
 									/>
 								</FormControl>
 							</FormItem>
