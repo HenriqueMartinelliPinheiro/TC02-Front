@@ -47,6 +47,16 @@ export const EventForm: React.FC<EventFormProps> = ({
 	> | null>(null);
 	const [hasLocation, setHasLocation] = useState(false);
 
+	// Verifica se a latitude e longitude são diferentes de zero ao carregar a página
+	useEffect(() => {
+		const latitude = formMethods.getValues('eventLatitude');
+		const longitude = formMethods.getValues('eventLongitude');
+
+		if (latitude !== 0 && longitude !== 0) {
+			setHasLocation(true);
+		}
+	}, [formMethods]);
+
 	const handleFormSubmit = (values: z.infer<typeof eventFormSchema>) => {
 		setSubmitValues(values);
 		setIsModalOpen(true);
@@ -56,7 +66,6 @@ export const EventForm: React.FC<EventFormProps> = ({
 		if (submitValues) {
 			await onSubmit(submitValues);
 			setIsModalOpen(false);
-
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	};

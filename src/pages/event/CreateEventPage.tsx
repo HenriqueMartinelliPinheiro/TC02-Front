@@ -31,6 +31,7 @@ export const CreateEventPage: React.FC = () => {
 	const { data: courses } = useFetchCourses(0, 0, '');
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
+		console.log('teste');
 		const adjustedValues = {
 			...values,
 			eventStartDate: new Date(`${values.eventStartDate}:00Z`),

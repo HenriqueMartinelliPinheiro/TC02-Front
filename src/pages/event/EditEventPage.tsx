@@ -8,6 +8,31 @@ import { Header } from '../../utils/Header';
 import { EventForm } from '@/components/forms/EventForm';
 import { useEditEvent } from '../../hooks/event/useEditPage';
 import { useGetEventById } from '@/hooks/event/useGetEventById';
+import { useFetchCourses } from '@/hooks/course/useFetchCourses';
+import { useFetchStatusOptions } from '@/hooks/event/useFetchStatusOptions';
+
+interface EventCourse {
+	eventId: number;
+	courseId: number;
+	course: {
+		courseId: number;
+		courseName: string;
+		createdAt: string;
+		updatedAt: string;
+		courseCoordinatorEmail: string;
+	};
+}
+
+interface EventActivity {
+	eventActivityId: number;
+	eventActivityTitle: string;
+	eventActivityDescription: string;
+	eventActivityStartDate: string;
+	eventActivityEndDate: string;
+	eventId: number;
+	createdAt: string;
+	updatedAt: string;
+}
 
 export const EditEventPage: React.FC = () => {
 	const { eventId } = useParams<{ eventId: string }>();
@@ -20,34 +45,43 @@ export const EditEventPage: React.FC = () => {
 	});
 
 	const { event, error: eventError } = useGetEventById(Number(eventId));
+	const { data: courses } = useFetchCourses(0, 0, '');
+	const { data: statusOptions } = useFetchStatusOptions();
 
+	console.log('event:', event);
 	useEffect(() => {
-		if (event?.event) {
-			const startDate = event.event.eventStartDate
-				? new Date(event.event.eventStartDate).toISOString().slice(0, 16)
-				: '';
-			const endDate = event.event.eventEndDate
-				? new Date(event.event.eventEndDate).toISOString().slice(0, 16)
-				: '';
+		if (event?.event && courses) {
+			const selectedCourseIds = event.event.eventCourse.map(
+				(ec: EventCourse) => ec.course.courseId
+			);
 
-			formMethods.reset({
-				eventTitle: event.event.eventTitle,
-				eventStartDate: startDate,
-				eventEndDate: endDate,
-				eventStatus: event.event.eventStatus,
-				selectedCoursesIds: event.event.selectedCoursesIds,
-				eventActivities: event.event.eventActivities,
-				eventLatitude: event.event.eventLatitude,
-				eventLongitude: event.event.eventLongitude,
-				eventRadius: event.event.eventRadius,
-			});
+			const formattedActivities = event.event.eventActivity.map(
+				(activity: EventActivity) => ({
+					...activity,
+					eventActivityStartDate: formatDateForInput(activity.eventActivityStartDate),
+					eventActivityEndDate: formatDateForInput(activity.eventActivityEndDate),
+				})
+			);
+
+			formMethods.setValue('eventTitle', event.event.eventTitle);
+			formMethods.setValue(
+				'eventStartDate',
+				formatDateForInput(event.event.eventStartDate)
+			);
+			formMethods.setValue('eventEndDate', formatDateForInput(event.event.eventEndDate));
+			formMethods.setValue('eventStatus', event.event.eventStatus);
+			formMethods.setValue('selectedCoursesIds', selectedCourseIds);
+			formMethods.setValue('eventActivities', formattedActivities);
+			formMethods.setValue('eventLatitude', event.event.eventLocation.latitude);
+			formMethods.setValue('eventLongitude', event.event.eventLocation.longitude);
+			formMethods.setValue('eventRadius', event.event.eventLocation.radius);
+
 			setIsLoading(false);
 		} else if (eventError) {
 			console.log('error:', eventError);
-			// navigate('/eventos');
 			setIsLoading(false);
 		}
-	}, [event, eventError, formMethods, navigate]);
+	}, [event, eventError, formMethods, navigate, courses]);
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
 		if (eventId) {
@@ -75,8 +109,8 @@ export const EditEventPage: React.FC = () => {
 						error={error}
 						data={data}
 						message={message}
-						statusOptions={[]}
-						courses={[]}
+						statusOptions={statusOptions}
+						courses={courses}
 						selectedCourseIds={formMethods.getValues('selectedCoursesIds')}
 						isEditMode={true}
 					/>
@@ -84,4 +118,15 @@ export const EditEventPage: React.FC = () => {
 			</div>
 		</>
 	);
+};
+
+const formatDateForInput = (dateString: string): string => {
+	const date = new Date(dateString);
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	const day = String(date.getDate()).padStart(2, '0');
+	const hours = String(date.getHours()).padStart(2, '0');
+	const minutes = String(date.getMinutes()).padStart(2, '0');
+
+	return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
