@@ -48,9 +48,8 @@ export const EditEventPage: React.FC = () => {
 	const { data: courses } = useFetchCourses(0, 0, '');
 	const { data: statusOptions } = useFetchStatusOptions();
 
-	console.log('event:', event);
 	useEffect(() => {
-		if (event?.event && courses) {
+		if (event?.event && courses && statusOptions) {
 			const selectedCourseIds = event.event.eventCourse.map(
 				(ec: EventCourse) => ec.course.courseId
 			);
@@ -63,25 +62,34 @@ export const EditEventPage: React.FC = () => {
 				})
 			);
 
-			formMethods.setValue('eventTitle', event.event.eventTitle);
+			formMethods.setValue('eventTitle', event.event.eventTitle || '');
 			formMethods.setValue(
 				'eventStartDate',
-				formatDateForInput(event.event.eventStartDate)
+				formatDateForInput(event.event.eventStartDate || '')
 			);
-			formMethods.setValue('eventEndDate', formatDateForInput(event.event.eventEndDate));
-			formMethods.setValue('eventStatus', event.event.eventStatus);
+			const eventLocation = event.event.eventLocation;
+			formMethods.setValue('eventLatitude', eventLocation ? eventLocation.latitude : 0);
+			formMethods.setValue('eventLongitude', eventLocation ? eventLocation.longitude : 0);
+			formMethods.setValue('eventRadius', eventLocation ? eventLocation.radius : 0);
+			formMethods.setValue(
+				'eventEndDate',
+				formatDateForInput(event.event.eventEndDate || '')
+			);
+
+			const matchingStatusOption = statusOptions.find(
+				(option) => option.value === event.event.eventStatus
+			);
+			formMethods.setValue('eventStatus', matchingStatusOption?.value || '');
+
 			formMethods.setValue('selectedCoursesIds', selectedCourseIds);
 			formMethods.setValue('eventActivities', formattedActivities);
-			formMethods.setValue('eventLatitude', event.event.eventLocation.latitude);
-			formMethods.setValue('eventLongitude', event.event.eventLocation.longitude);
-			formMethods.setValue('eventRadius', event.event.eventLocation.radius);
 
 			setIsLoading(false);
 		} else if (eventError) {
 			console.log('error:', eventError);
 			setIsLoading(false);
 		}
-	}, [event, eventError, formMethods, navigate, courses]);
+	}, [event, eventError, formMethods, navigate, courses, statusOptions]);
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
 		if (eventId) {
@@ -92,6 +100,12 @@ export const EditEventPage: React.FC = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (data) {
+			formMethods.reset();
+		}
+	}, [data, formMethods]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;

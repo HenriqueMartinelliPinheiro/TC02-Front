@@ -47,7 +47,6 @@ export const EventForm: React.FC<EventFormProps> = ({
 	> | null>(null);
 	const [hasLocation, setHasLocation] = useState(false);
 
-	// Verifica se a latitude e longitude são diferentes de zero ao carregar a página
 	useEffect(() => {
 		const latitude = formMethods.getValues('eventLatitude');
 		const longitude = formMethods.getValues('eventLongitude');
@@ -110,9 +109,9 @@ export const EventForm: React.FC<EventFormProps> = ({
 			);
 			formMethods.setValue('eventRadius', formMethods.getValues('eventRadius') || 50);
 		} else {
-			formMethods.setValue('eventLatitude', undefined);
-			formMethods.setValue('eventLongitude', undefined);
-			formMethods.setValue('eventRadius', undefined);
+			formMethods.setValue('eventLatitude', 0);
+			formMethods.setValue('eventLongitude', 0);
+			formMethods.setValue('eventRadius', 50);
 		}
 	};
 
@@ -187,7 +186,8 @@ export const EventForm: React.FC<EventFormProps> = ({
 										<FormControl>
 											<select
 												disabled={!isEditMode}
-												value={formMethods.watch('eventStatus') || 'Não Iniciado'}
+												required
+												value={formMethods.watch('eventStatus') || ''}
 												onChange={(e) => {
 													field.onChange(e.target.value);
 												}}
