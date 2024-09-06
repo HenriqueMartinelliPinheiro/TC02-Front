@@ -19,7 +19,7 @@ export const CreateEventPage: React.FC = () => {
 			eventStartDate: '',
 			eventEndDate: '',
 			eventStatus: 'Nao Iniciado',
-			selectedCoursesIds: [],
+			selectedCourses: [],
 			eventActivities: [],
 			eventLatitude: 0,
 			eventLongitude: 0,
@@ -68,7 +68,7 @@ export const CreateEventPage: React.FC = () => {
 						message={message}
 						statusOptions={statusOptions || []}
 						courses={courses || []}
-						selectedCourseIds={formMethods.getValues('selectedCoursesIds')}
+						selectedCourses={formMethods.getValues('selectedCourses')}
 						isEditMode={false}
 					/>
 				</div>

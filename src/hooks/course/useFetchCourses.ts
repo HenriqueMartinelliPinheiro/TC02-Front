@@ -1,18 +1,17 @@
 import { fetchCoursesService } from '@/services/course/fetchAllCoursesService';
 import { useState, useEffect } from 'react';
-import { Course } from '../../components/tables/courses/CourseTableColumns';
 
 export const useFetchCourses = (
 	skip: number,
 	take: number,
 	searchTerm: string
 ): {
-	data: Course[];
+	data: CourseInterface[];
 	loading: boolean;
 	error: boolean;
 	total: number;
 } => {
-	const [data, setData] = useState<Course[]>([]);
+	const [data, setData] = useState<CourseInterface[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [total, setTotal] = useState(0);

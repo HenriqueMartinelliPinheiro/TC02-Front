@@ -21,7 +21,7 @@ interface EventFormProps {
 	message: string | null;
 	statusOptions: { value: string; label: string }[];
 	courses: { courseId: number; courseName: string }[];
-	selectedCourseIds: number[];
+	selectedCourses: CourseInterface[];
 	isEditMode?: boolean;
 }
 
@@ -85,13 +85,17 @@ export const EventForm: React.FC<EventFormProps> = ({
 		}
 	}, [fields, append, remove]);
 
-	const handleCheckboxChange = (id: number) => {
-		const currentValue = formMethods.getValues('selectedCoursesIds') || [];
-		const updatedValue = currentValue.includes(id)
-			? currentValue.filter((courseId: number) => courseId !== id)
-			: [...currentValue, id];
+	const handleCheckboxChange = (course: CourseInterface) => {
+		const currentValue = formMethods.getValues('selectedCourses') || [];
+		const updatedValue = currentValue.some(
+			(selectedCourse: CourseInterface) => selectedCourse.courseId === course.courseId
+		)
+			? currentValue.filter(
+					(selectedCourse: CourseInterface) => selectedCourse.courseId !== course.courseId
+			  )
+			: [...currentValue, course];
 
-		formMethods.setValue('selectedCoursesIds', updatedValue);
+		formMethods.setValue('selectedCourses', updatedValue);
 	};
 
 	const handleLocationCheckboxChange = (checked: CheckedState) => {
@@ -213,7 +217,7 @@ export const EventForm: React.FC<EventFormProps> = ({
 							<h3 className='text-center mb-8'>Cursos Participantes</h3>
 							<FormField
 								control={formMethods.control}
-								name='selectedCoursesIds'
+								name='selectedCourses'
 								render={() => (
 									<FormItem>
 										<FormLabel>Cursos Permitidos</FormLabel>
@@ -223,11 +227,12 @@ export const EventForm: React.FC<EventFormProps> = ({
 													<div key={course.courseId} className='flex items-center'>
 														<Checkbox
 															checked={formMethods
-																.watch('selectedCoursesIds')
-																.includes(course.courseId)}
-															onCheckedChange={() =>
-																handleCheckboxChange(course.courseId)
-															}
+																.watch('selectedCourses')
+																.some(
+																	(selectedCourse: CourseInterface) =>
+																		selectedCourse.courseId === course.courseId
+																)}
+															onCheckedChange={() => handleCheckboxChange(course)}
 														/>
 														<span className='ml-2'>{course.courseName}</span>
 													</div>

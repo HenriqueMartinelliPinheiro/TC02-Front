@@ -81,7 +81,7 @@ export const EditEventPage: React.FC = () => {
 			);
 			formMethods.setValue('eventStatus', matchingStatusOption?.value || '');
 
-			formMethods.setValue('selectedCoursesIds', selectedCourseIds);
+			formMethods.setValue('selectedCourses', selectedCourseIds);
 			formMethods.setValue('eventActivities', formattedActivities);
 
 			setIsLoading(false);
@@ -125,7 +125,7 @@ export const EditEventPage: React.FC = () => {
 						message={message}
 						statusOptions={statusOptions}
 						courses={courses}
-						selectedCourseIds={formMethods.getValues('selectedCoursesIds')}
+						selectedCourses={formMethods.getValues('selectedCourses')}
 						isEditMode={true}
 					/>
 				</div>

@@ -6,7 +6,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import { HomePage } from './pages/HomePage';
 import { CreateCoursePage } from './pages/course/CreateCoursePage';
 import { DefaultWarning } from './utils/DefaultWarning';
-import ListCoursesPage from './pages/course/ListCoursePage';
+// import ListCoursesPage from './pages/course/ListCoursePage';
 import { EditCoursePage } from './pages/course/EditCoursePage';
 import { CreateUserPage } from './pages/user/CreateUserPage';
 import { ListUsersPage } from './pages/user/ListUsersPage';
@@ -37,10 +37,10 @@ const App: React.FC = () => {
 					<Route element={<PrivateRoute roles={roles.CREATE_COURSE_ROLES} />}>
 						<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
 					</Route>
-
+					{/* 
 					<Route element={<PrivateRoute roles={roles.LIST_COURSES_ROLES} />}>
 						<Route path='/cursos' element={<ListCoursesPage />} />
-					</Route>
+					</Route> */}
 
 					<Route element={<PrivateRoute roles={roles.EDIT_COURSE_ROLES} />}>
 						<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />

@@ -8,7 +8,7 @@ interface EventInterface {
 		eventActivityDescription: string;
 	}[];
 	eventTitle: string;
-	selectedCoursesIds: number[];
+	selectedCourses: CourseInterface[];
 	eventStatus?: string | undefined;
 	eventRadius?: number;
 	eventLatitude?: number;
