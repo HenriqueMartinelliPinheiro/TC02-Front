@@ -21,6 +21,7 @@ export const useFetchCourses = (
 			try {
 				const { courses, total } = await fetchCoursesService(skip, take, searchTerm);
 				setData(courses);
+				console.log(courses);
 				setTotal(total);
 				setError(false);
 			} catch (error) {

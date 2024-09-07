@@ -14,13 +14,7 @@ import { useFetchStatusOptions } from '@/hooks/event/useFetchStatusOptions';
 interface EventCourse {
 	eventId: number;
 	courseId: number;
-	course: {
-		courseId: number;
-		courseName: string;
-		createdAt: string;
-		updatedAt: string;
-		courseCoordinatorEmail: string;
-	};
+	courseName: string;
 }
 
 interface EventActivity {
@@ -50,10 +44,10 @@ export const EditEventPage: React.FC = () => {
 
 	useEffect(() => {
 		if (event?.event && courses && statusOptions) {
-			const selectedCourseIds = event.event.eventCourse.map(
-				(ec: EventCourse) => ec.course.courseId
-			);
-
+			const selectedCourses = event.event.eventCourse.map((ec: EventCourse) => ({
+				courseId: ec.courseId,
+				courseName: ec.courseName,
+			}));
 			const formattedActivities = event.event.eventActivity.map(
 				(activity: EventActivity) => ({
 					...activity,
@@ -81,7 +75,7 @@ export const EditEventPage: React.FC = () => {
 			);
 			formMethods.setValue('eventStatus', matchingStatusOption?.value || '');
 
-			formMethods.setValue('selectedCourses', selectedCourseIds);
+			formMethods.setValue('selectedCourses', selectedCourses);
 			formMethods.setValue('eventActivities', formattedActivities);
 
 			setIsLoading(false);
@@ -90,22 +84,17 @@ export const EditEventPage: React.FC = () => {
 			setIsLoading(false);
 		}
 	}, [event, eventError, formMethods, navigate, courses, statusOptions]);
-
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
 		if (eventId) {
 			await handleEditEvent(Number(eventId), values);
-			if (data) {
+
+			if (!error) {
 				formMethods.reset();
-				navigate('/eventos');
+			} else {
+				console.log('Erro ao editar o evento:', error);
 			}
 		}
 	};
-
-	useEffect(() => {
-		if (data) {
-			formMethods.reset();
-		}
-	}, [data, formMethods]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
