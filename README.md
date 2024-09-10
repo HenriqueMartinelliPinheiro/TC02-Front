@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+Repositório para O front-end para gerenciamento de frequência em eventos do IFC Videira.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Guia de Execução do Front-End
 
-Currently, two official plugins are available:
+### Pré-requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Node.js**: Instale a versão mais recente do [Node.js](https://nodejs.org/).
+2. **npm**: npm é instalado automaticamente com o Node.js.
 
-## Expanding the ESLint configuration
+### Passo a Passo
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone o Repositório
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+git clone https://github.com/HenriqueMartinelliPinheiro/TC02-Front.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Instale as dependências do projeto
+
+```bash
+cd TC02-Front
+npm install
+```
+
+3. Execute o Front-End
+
+```bash
+npm run dev
+```
