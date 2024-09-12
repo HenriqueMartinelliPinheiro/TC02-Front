@@ -15,26 +15,6 @@ export const HomePageButtons: React.FC = () => {
 
 	return (
 		<div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 md:px-8 lg:px-16'>
-			{roles.LIST_COURSES_ROLES.includes(role ?? '') && (
-				<div className='flex justify-center'>
-					<Button
-						className='w-full max-w-[200px] h-[20px] py-6 rounded bg-green-600 text-primary-foreground text-center'
-						onClick={() => navigate('/cursos')}>
-						Gerenciar Cursos
-					</Button>
-				</div>
-			)}
-
-			{roles.CREATE_COURSE_ROLES.includes(role ?? '') && (
-				<div className='flex justify-center'>
-					<Button
-						className='w-full max-w-[200px] h-[20px] py-6 rounded bg-green-600 text-primary-foreground text-center'
-						onClick={() => navigate('/cadastrarCurso')}>
-						Cadastrar Cursos
-					</Button>
-				</div>
-			)}
-
 			{roles.CREATE_USER_ROLES.includes(role ?? '') && (
 				<div className='flex justify-center'>
 					<Button
