@@ -10,6 +10,7 @@ import { useEditEvent } from '../../hooks/event/useEditPage';
 import { useGetEventById } from '@/hooks/event/useGetEventById';
 import { useFetchCourses } from '@/hooks/course/useFetchCourses';
 import { useFetchStatusOptions } from '@/hooks/event/useFetchStatusOptions';
+import { statusMapping } from '@/utils/EventStatusMapping';
 
 interface EventCourse {
 	eventId: number;
@@ -44,6 +45,10 @@ export const EditEventPage: React.FC = () => {
 
 	useEffect(() => {
 		if (event?.event && courses && statusOptions) {
+			console.log('Event:', event.event);
+			console.log('Courses:', courses);
+			console.log('StatusOptions:', statusOptions);
+
 			const selectedCourses = event.event.eventCourse.map((ec: EventCourse) => ({
 				courseId: ec.courseId,
 				courseName: ec.courseName,
@@ -70,10 +75,19 @@ export const EditEventPage: React.FC = () => {
 				formatDateForInput(event.event.eventEndDate || '')
 			);
 
+			const mappedStatus = statusMapping[event.event.eventStatus];
+			console.log('Mapped Status:', mappedStatus);
+
 			const matchingStatusOption = statusOptions.find(
-				(option) => option.value === event.event.eventStatus
+				(option) => option.label === mappedStatus
 			);
-			formMethods.setValue('eventStatus', matchingStatusOption?.value || '');
+
+			if (matchingStatusOption) {
+				formMethods.setValue('eventStatus', matchingStatusOption.value);
+				console.log('Status Atualizado:', formMethods.getValues('eventStatus'));
+			} else {
+				console.log('Nenhuma opção de status correspondente foi encontrada.');
+			}
 
 			formMethods.setValue('selectedCourses', selectedCourses);
 			formMethods.setValue('eventActivities', formattedActivities);
@@ -84,6 +98,7 @@ export const EditEventPage: React.FC = () => {
 			setIsLoading(false);
 		}
 	}, [event, eventError, formMethods, navigate, courses, statusOptions]);
+
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
 		if (eventId) {
 			await handleEditEvent(Number(eventId), values);

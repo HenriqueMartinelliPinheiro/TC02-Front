@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LogOut, ChevronDown } from 'lucide-react';
+import { LogOut, ChevronDown, Menu } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { roles } from '@/config/RoleRoutes';
@@ -10,10 +10,18 @@ export const Header: React.FC = () => {
 	const navigate = useNavigate();
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 	const [isEventMenuOpen, setIsEventMenuOpen] = useState(false);
+	const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
 	if (loading) {
 		return null;
 	}
+
+	const mainButtonStyles =
+		'flex items-center w-full bg-green-600 text-white hover:bg-gray-700 rounded-md px-4 py-2';
+	const submenuContainerStyles =
+		'absolute bg-gray-700 shadow-md rounded-md p-2 w-full z-10';
+	const submenuItemStyles =
+		'w-full py-2 cursor-pointer text-white bg-gray-700 hover:bg-gray-600 p-4 rounded';
 
 	return (
 		<header className='p-4'>
@@ -25,33 +33,109 @@ export const Header: React.FC = () => {
 						className='h-16 w-auto object-contain'
 					/>
 				</a>
+				<button
+					className='block md:hidden ml-auto'
+					onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}>
+					<Menu className='h-8 w-8 text-black' />
+				</button>
 			</div>
-			<div className='absolute top-1 right-0 flex items-center p-4 space-x-4'>
-				{/* Menu de Gerenciamento de Usuários */}
+
+			{isHamburgerOpen && (
+				<div className='absolute top-16 left-0 w-full bg-green-300 p-4 space-y-4 shadow-lg md:hidden'>
+					{(roles.CREATE_USER_ROLES.includes(role ?? '') ||
+						roles.LIST_USERS_ROLES.includes(role ?? '')) && (
+						<div className='relative w-full'>
+							<Button
+								className={mainButtonStyles}
+								onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+								Gerenciar Usuários
+								<ChevronDown className='ml-2' />
+							</Button>
+							{isUserMenuOpen && (
+								<div className={submenuContainerStyles}>
+									{roles.CREATE_USER_ROLES.includes(role ?? '') && (
+										<div
+											className={submenuItemStyles}
+											onClick={() => navigate('/cadastrarUsuario')}>
+											Cadastrar Usuários
+										</div>
+									)}
+									{roles.LIST_USERS_ROLES.includes(role ?? '') && (
+										<div
+											className={submenuItemStyles}
+											onClick={() => navigate('/usuarios')}>
+											Consultar Usuários
+										</div>
+									)}
+								</div>
+							)}
+						</div>
+					)}
+
+					{(roles.CREATE_EVENT_ROLES.includes(role ?? '') ||
+						roles.FETCH_ALL_EVENTS.includes(role ?? '')) && (
+						<div className='relative w-full'>
+							<Button
+								className={mainButtonStyles}
+								onClick={() => setIsEventMenuOpen(!isEventMenuOpen)}>
+								Gerenciar Eventos
+								<ChevronDown className='ml-2' />
+							</Button>
+							{isEventMenuOpen && (
+								<div className={submenuContainerStyles}>
+									{roles.CREATE_EVENT_ROLES.includes(role ?? '') && (
+										<div
+											className={submenuItemStyles}
+											onClick={() => navigate('/cadastrarEvento')}>
+											Cadastrar Eventos
+										</div>
+									)}
+									{roles.FETCH_ALL_EVENTS.includes(role ?? '') && (
+										<div
+											className={submenuItemStyles}
+											onClick={() => navigate('/eventos')}>
+											Gerenciar Eventos
+										</div>
+									)}
+								</div>
+							)}
+						</div>
+					)}
+
+					<Button
+						className='w-full'
+						onClick={() => {
+							logout();
+							navigate('/home');
+						}}>
+						<LogOut className='px-1' /> Sair
+					</Button>
+				</div>
+			)}
+
+			<div className='absolute top-1 right-0 hidden md:flex items-center p-4 space-x-4'>
 				{(roles.CREATE_USER_ROLES.includes(role ?? '') ||
 					roles.LIST_USERS_ROLES.includes(role ?? '')) && (
-					<div
-						className={`relative ${
-							isUserMenuOpen ? 'bg-gray-100' : ''
-						} hover:bg-gray-100 rounded-md`}>
+					<div className='relative'>
 						<Button
-							className='flex items-center w-full'
-							onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+							className={mainButtonStyles}
+							onMouseEnter={() => setIsUserMenuOpen(true)}
+							onMouseLeave={() => setIsUserMenuOpen(false)}>
 							Gerenciar Usuários
 							<ChevronDown className='ml-2' />
 						</Button>
 						{isUserMenuOpen && (
-							<div className='absolute top-10 left-0 bg-gray-100 shadow-md rounded-md p-4 w-full'>
+							<div className={submenuContainerStyles}>
 								{roles.CREATE_USER_ROLES.includes(role ?? '') && (
 									<div
-										className='w-full py-2 cursor-pointer hover:bg-gray-200'
+										className={submenuItemStyles}
 										onClick={() => navigate('/cadastrarUsuario')}>
 										Cadastrar Usuários
 									</div>
 								)}
 								{roles.LIST_USERS_ROLES.includes(role ?? '') && (
 									<div
-										className='w-full py-2 cursor-pointer hover:bg-gray-200'
+										className={submenuItemStyles}
 										onClick={() => navigate('/usuarios')}>
 										Consultar Usuários
 									</div>
@@ -61,32 +145,27 @@ export const Header: React.FC = () => {
 					</div>
 				)}
 
-				{/* Menu de Gerenciamento de Eventos */}
 				{(roles.CREATE_EVENT_ROLES.includes(role ?? '') ||
 					roles.FETCH_ALL_EVENTS.includes(role ?? '')) && (
-					<div
-						className={`relative ${
-							isEventMenuOpen ? 'bg-gray-100' : ''
-						} hover:bg-gray-100 rounded-md`}>
+					<div className='relative'>
 						<Button
-							className='flex items-center w-full'
-							onClick={() => setIsEventMenuOpen(!isEventMenuOpen)}>
+							className={mainButtonStyles}
+							onMouseEnter={() => setIsEventMenuOpen(true)}
+							onMouseLeave={() => setIsEventMenuOpen(false)}>
 							Gerenciar Eventos
 							<ChevronDown className='ml-2' />
 						</Button>
 						{isEventMenuOpen && (
-							<div className='absolute top-10 left-0 bg-gray-100 shadow-md rounded-md p-4 w-full'>
+							<div className={submenuContainerStyles}>
 								{roles.CREATE_EVENT_ROLES.includes(role ?? '') && (
 									<div
-										className='w-full py-2 cursor-pointer bg-gray-700 text-white hover:bg-gray-200'
+										className={submenuItemStyles}
 										onClick={() => navigate('/cadastrarEvento')}>
 										Cadastrar Eventos
 									</div>
 								)}
 								{roles.FETCH_ALL_EVENTS.includes(role ?? '') && (
-									<div
-										className='w-full py-2 cursor-pointer hover:bg-gray-200'
-										onClick={() => navigate('/eventos')}>
+									<div className={submenuItemStyles} onClick={() => navigate('/eventos')}>
 										Gerenciar Eventos
 									</div>
 								)}
@@ -95,7 +174,6 @@ export const Header: React.FC = () => {
 					</div>
 				)}
 
-				{/* Botão de Logout */}
 				<Button
 					onClick={() => {
 						logout();
