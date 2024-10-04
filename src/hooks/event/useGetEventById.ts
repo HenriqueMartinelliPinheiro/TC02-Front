@@ -17,7 +17,6 @@ export const useGetEventById = (eventId: number) => {
 				if (error instanceof Error) {
 					setError(error.message);
 				}
-				//navigate('/eventos');
 			} finally {
 				setIsLoading(false);
 			}

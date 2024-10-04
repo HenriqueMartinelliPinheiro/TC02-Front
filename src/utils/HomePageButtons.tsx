@@ -13,7 +13,6 @@ export const HomePageButtons: React.FC = () => {
 		return <DefaultWarning message='Carregando, Aguarde' />;
 	}
 
-	// Filtrar os botões que serão exibidos com base na role
 	const buttons = [
 		roles.CREATE_USER_ROLES.includes(role ?? '') && (
 			<Button

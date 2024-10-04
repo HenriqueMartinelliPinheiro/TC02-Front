@@ -1,4 +1,3 @@
-// useFetchStatusOptions.ts
 import { useState, useEffect } from 'react';
 import { fetchStatusOptions } from '../../services/event/fetchStatusOptionsService';
 
