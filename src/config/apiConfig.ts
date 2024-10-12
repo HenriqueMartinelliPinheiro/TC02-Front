@@ -14,4 +14,5 @@ export const API_ROUTES = {
 	FETCH_STATUS_OPTIONS: `${API_BASE_URL}/fetchAllEventStatusOptions`,
 	FETCH_ALL_EVENTS: `${API_BASE_URL}/fetchAllEvents`,
 	EDIT_EVENT: `${API_BASE_URL}/editEvent`,
+	ISSUE_REPORT: `${API_BASE_URL}/issueReport`,
 };

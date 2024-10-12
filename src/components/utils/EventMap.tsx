@@ -23,7 +23,6 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 			];
 			const initialRadius = formMethods.getValues('eventRadius') || 50;
 
-			// Inicializa o mapa
 			const map = L.map(mapRef.current).setView(initialCoordinates, 13);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; OpenStreetMap contributors',
@@ -31,11 +30,9 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 
 			mapInstanceRef.current = map;
 
-			// Adiciona marcador
 			const marker = L.marker(initialCoordinates).addTo(map);
 			markerRef.current = marker;
 
-			// Adiciona círculo
 			const circle = L.circle(initialCoordinates, {
 				color: 'green',
 				fillColor: '#0c7a0c',
@@ -44,7 +41,6 @@ export const EventMap: React.FC<EventMapProps> = ({ formMethods }) => {
 			}).addTo(map);
 			circleRef.current = circle;
 
-			// Evento de clique no mapa para mover marcador
 			map.on('click', (e: L.LeafletMouseEvent) => {
 				const { lat, lng } = e.latlng;
 				marker.setLatLng([lat, lng]);

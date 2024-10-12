@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { DefaultWarning } from '@/utils/DefaultWarning';
 import { Alert } from '@/components/ui/alert';
-import { Modal } from '@/components/ui/modal'; // Importação do Modal
+import { Modal } from '@/components/ui/modal';
 
 interface UserFormProps {
 	formMethods: UseFormReturn<z.infer<typeof userFormSchema>>;

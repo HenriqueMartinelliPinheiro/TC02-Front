@@ -1,7 +1,6 @@
 import { API_ROUTES } from '@/config/apiConfig';
 
 export const getEventByIdService = async (eventId: number) => {
-	console.log(`${API_ROUTES.GET_EVENT_BY_ID}/${eventId}`);
 
 	try {
 		const response = await fetch(`${API_ROUTES.GET_EVENT_BY_ID}/${eventId}`, {
