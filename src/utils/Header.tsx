@@ -34,7 +34,6 @@ export const Header: React.FC = () => {
 				</a>
 			</div>
 			<div className='absolute top-1 right-0 flex items-center p-4 space-x-4'>
-				{/* Menu de Gerenciamento de Usuários */}
 				{(roles.CREATE_USER_ROLES.includes(role ?? '') ||
 					roles.LIST_USERS_ROLES.includes(role ?? '')) && (
 					<div
@@ -66,7 +65,6 @@ export const Header: React.FC = () => {
 					</div>
 				)}
 
-				{/* Menu de Gerenciamento de Eventos */}
 				{(roles.CREATE_EVENT_ROLES.includes(role ?? '') ||
 					roles.FETCH_ALL_EVENTS.includes(role ?? '')) && (
 					<div
@@ -96,7 +94,6 @@ export const Header: React.FC = () => {
 					</div>
 				)}
 
-				{/* Botão de Logout */}
 				<Button
 					onClick={() => {
 						logout();
