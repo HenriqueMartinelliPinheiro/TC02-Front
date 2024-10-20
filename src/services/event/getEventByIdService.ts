@@ -1,7 +1,6 @@
 import { API_ROUTES } from '@/config/apiConfig';
 
 export const getEventByIdService = async (eventId: number) => {
-
 	try {
 		const response = await fetch(`${API_ROUTES.GET_EVENT_BY_ID}/${eventId}`, {
 			method: 'GET',
@@ -12,7 +11,7 @@ export const getEventByIdService = async (eventId: number) => {
 		});
 
 		if (!response.ok) {
-			throw new Error('Failed to load event data');
+			throw new Error('Falha ao buscar evento');
 		}
 
 		const data = await response.json();

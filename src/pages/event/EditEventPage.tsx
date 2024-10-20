@@ -105,6 +105,9 @@ export const EditEventPage: React.FC = () => {
 
 			if (!error) {
 				formMethods.reset();
+				setTimeout(() => {
+					navigate('/eventos');
+				}, 2000);
 			} else {
 				console.log('Erro ao editar o evento:', error);
 			}
