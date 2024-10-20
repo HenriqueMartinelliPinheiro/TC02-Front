@@ -101,15 +101,13 @@ export const EditEventPage: React.FC = () => {
 
 	const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
 		if (eventId) {
-			await handleEditEvent(Number(eventId), values);
+			const result = await handleEditEvent(Number(eventId), values);
 
-			if (!error) {
+			if (!result?.error) {
 				formMethods.reset();
-				setTimeout(() => {
-					navigate('/eventos');
-				}, 2000);
+				navigate('/eventos');
 			} else {
-				console.log('Erro ao editar o evento:', error);
+				console.log('Erro ao editar o evento:', result.error);
 			}
 		}
 	};
