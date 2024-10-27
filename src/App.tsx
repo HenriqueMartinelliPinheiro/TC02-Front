@@ -20,53 +20,44 @@ const App: React.FC = () => {
 		<AuthProvider>
 			<Router>
 				<Routes>
-					{/* Todas as rotas baseadas em /admin */}
-					<Route path='/admin'>
-						{/* Página de Login */}
-						<Route path='login' element={<LoginPage />} />
+					<Route path='/login' element={<LoginPage />} />
+					<Route
+						path='/loading'
+						element={<DefaultWarning message='Carregando, Aguarde...' />}
+					/>
+					<Route path='/unauthorized' element={<Unauthorized />} />
 
-						{/* Página de Carregando */}
-						<Route
-							path='loading'
-							element={<DefaultWarning message='Carregando, Aguarde...' />}
-						/>
+					<Route element={<PrivateRoute roles={roles.HOME_PAGE_ROLES} />}>
+						<Route path='/home' element={<HomePage />} />
+						<Route path='/' element={<HomePage />} />
+					</Route>
 
-						{/* Página Não Autorizado */}
-						<Route path='unauthorized' element={<Unauthorized />} />
+					<Route element={<PrivateRoute roles={roles.CREATE_COURSE_ROLES} />}>
+						<Route path='/cadastrarCurso' element={<CreateCoursePage />} />
+					</Route>
 
-						{/* Rotas Privadas */}
-						<Route element={<PrivateRoute roles={roles.HOME_PAGE_ROLES} />}>
-							<Route path='home' element={<HomePage />} />
-							<Route path='' element={<HomePage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.EDIT_COURSE_ROLES} />}>
+						<Route path='/editarCurso/:courseId' element={<EditCoursePage />} />
+					</Route>
 
-						<Route element={<PrivateRoute roles={roles.CREATE_COURSE_ROLES} />}>
-							<Route path='cadastrarCurso' element={<CreateCoursePage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.CREATE_USER_ROLES} />}>
+						<Route path='/cadastrarUsuario' element={<CreateUserPage />} />
+					</Route>
 
-						<Route element={<PrivateRoute roles={roles.EDIT_COURSE_ROLES} />}>
-							<Route path='editarCurso/:courseId' element={<EditCoursePage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.LIST_USERS_ROLES} />}>
+						<Route path='/usuarios' element={<ListUsersPage />} />
+					</Route>
 
-						<Route element={<PrivateRoute roles={roles.CREATE_USER_ROLES} />}>
-							<Route path='cadastrarUsuario' element={<CreateUserPage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.CREATE_EVENT_ROLES} />}>
+						<Route path='/cadastrarEvento' element={<CreateEventPage />} />
+					</Route>
 
-						<Route element={<PrivateRoute roles={roles.LIST_USERS_ROLES} />}>
-							<Route path='usuarios' element={<ListUsersPage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.FETCH_ALL_EVENTS} />}>
+						<Route path='/eventos' element={<ListEventsPage />} />
+					</Route>
 
-						<Route element={<PrivateRoute roles={roles.CREATE_EVENT_ROLES} />}>
-							<Route path='cadastrarEvento' element={<CreateEventPage />} />
-						</Route>
-
-						<Route element={<PrivateRoute roles={roles.FETCH_ALL_EVENTS} />}>
-							<Route path='eventos' element={<ListEventsPage />} />
-						</Route>
-
-						<Route element={<PrivateRoute roles={roles.EDIT_EVENTS} />}>
-							<Route path='editarEvento/:eventId' element={<EditEventPage />} />
-						</Route>
+					<Route element={<PrivateRoute roles={roles.EDIT_EVENTS} />}>
+						<Route path='/editarEvento/:eventId' element={<EditEventPage />} />
 					</Route>
 				</Routes>
 			</Router>
