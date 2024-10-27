@@ -18,9 +18,9 @@ import { EditEventPage } from './pages/event/EditEventPage';
 const App: React.FC = () => {
 	return (
 		<AuthProvider>
-			<Router basename='/admin'>
+			<Router>
 				<Routes>
-					<Route path='/login' element={<LoginPage />} />
+					<Route path='/admin/login' element={<LoginPage />} />
 					<Route
 						path='/loading'
 						element={<DefaultWarning message='Carregando, Aguarde...' />}
