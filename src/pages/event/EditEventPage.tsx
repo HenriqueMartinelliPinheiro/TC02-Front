@@ -45,10 +45,6 @@ export const EditEventPage: React.FC = () => {
 
 	useEffect(() => {
 		if (event?.event && courses && statusOptions) {
-			console.log('Event:', event.event);
-			console.log('Courses:', courses);
-			console.log('StatusOptions:', statusOptions);
-
 			const selectedCourses = event.event.eventCourse.map((ec: EventCourse) => ({
 				courseId: ec.courseId,
 				courseName: ec.courseName,
@@ -76,7 +72,6 @@ export const EditEventPage: React.FC = () => {
 			);
 
 			const mappedStatus = statusMapping[event.event.eventStatus];
-			console.log('Mapped Status:', mappedStatus);
 
 			const matchingStatusOption = statusOptions.find(
 				(option) => option.label === mappedStatus
@@ -84,9 +79,7 @@ export const EditEventPage: React.FC = () => {
 
 			if (matchingStatusOption) {
 				formMethods.setValue('eventStatus', matchingStatusOption.value);
-				console.log('Status Atualizado:', formMethods.getValues('eventStatus'));
 			} else {
-				console.log('Nenhuma opção de status correspondente foi encontrada.');
 			}
 
 			formMethods.setValue('selectedCourses', selectedCourses);
@@ -94,7 +87,6 @@ export const EditEventPage: React.FC = () => {
 
 			setIsLoading(false);
 		} else if (eventError) {
-			console.log('error:', eventError);
 			setIsLoading(false);
 		}
 	}, [event, eventError, formMethods, navigate, courses, statusOptions]);
@@ -107,7 +99,6 @@ export const EditEventPage: React.FC = () => {
 				formMethods.reset();
 				navigate('/eventos');
 			} else {
-				console.log('Erro ao editar o evento:', result.error);
 			}
 		}
 	};
