@@ -18,7 +18,7 @@ import { EditEventPage } from './pages/event/EditEventPage';
 const App: React.FC = () => {
 	return (
 		<AuthProvider>
-			<Router>
+			<Router basename='/admin'>
 				<Routes>
 					<Route path='/login' element={<LoginPage />} />
 					<Route
