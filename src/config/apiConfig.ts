@@ -1,5 +1,5 @@
 // const API_BASE_URL = 'http://200.135.55.14:4000';
-// const API_BASE_URL = 'http://localhost:4000';
+// const API_BASE_URL = 'http://localhost:4000/api';
 const API_BASE_URL = 'https://cti.videira.ifc.edu.br/api';
 
 export const API_ROUTES = {

@@ -18,6 +18,7 @@ export const login = async (
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ userEmail, userPassword }),
+			credentials: 'include',
 		});
 
 		if (!response.ok) {
