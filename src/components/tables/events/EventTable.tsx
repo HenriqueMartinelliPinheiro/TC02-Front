@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { columns } from './EventTableColumns';
 import { DataTable } from '../../../utils/DataTable';
 import { useFetchEvents } from '@/hooks/event/useFetchEvents';
