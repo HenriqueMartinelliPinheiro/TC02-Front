@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
 		<header className='w-full p-4 g-gradient-to-l bg-green-300'>
 			<div className='container mx-auto flex flex-col items-center md:flex-row md:justify-between md:items-center'>
 				<div className='flex-shrink-0'>
-					<a href='/home'>
+					<a href='/admin/home'>
 						<img
 							src='/bannerIFC.png'
 							alt='Banner IFC'

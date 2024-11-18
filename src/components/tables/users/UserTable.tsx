@@ -51,7 +51,7 @@ export const UserTable = () => {
 				<Button className='mx-4'>
 					<Search />
 				</Button>
-				<a href='/cadastrarUsuario'>
+				<a href='/admin/cadastrarUsuario'>
 					<Button>
 						<PlusCircle className='pr-2' />
 						Adicionar Novo Usuário

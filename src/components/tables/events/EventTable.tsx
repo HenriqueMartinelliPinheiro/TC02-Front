@@ -51,10 +51,10 @@ export const EventTable = () => {
 				<Button className='mx-4'>
 					<Search />
 				</Button>
-				<a href='/cadastrarEvento'>
+				<a href='/admin/cadastrarEvento'>
 					<Button>
 						<PlusCircle className='pr-2' />
-						Add New Event
+						Adicionar Novo Evento
 					</Button>
 				</a>
 			</div>
