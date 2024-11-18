@@ -1,4 +1,4 @@
-Repositório para O front-end para gerenciamento de frequência em eventos do IFC Videira.
+Repositório para um protótipo de um front-end para gerenciamento de frequência em eventos do IFC Videira.
 
 ## Telas
 
