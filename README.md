@@ -1,29 +1,15 @@
 Repositório para O front-end para gerenciamento de frequência em eventos do IFC Videira.
 
-## Guia de Execução do Front-End
+## Telas
 
-### Pré-requisitos
+### Login Admin ![Figura 1: Login Admin](/telas/loginAdmin.png)
 
-1. **Node.js**: Instale a versão mais recente do [Node.js](https://nodejs.org/).
-2. **npm**: npm é instalado automaticamente com o Node.js.
+### Home Page ![Figura 2: Home Page Admin](/telas/homePageAdmin.png)
 
-### Passo a Passo
+### Lista de Eventos ![Figura 3: Listagem de Eventos](/telas/listaEventosAdmin.png)
 
-1. Clone o Repositório
+### Cadastro Eventos ![Figura 4: Cadastro de Eventos](/telas/FormularioCriarUsuario.png)
 
-```bash
-git clone https://github.com/HenriqueMartinelliPinheiro/TC02-Front.git
-```
+### Listagem de Usuários ![Figura 5: Listagem de Usuários](/telas/listagemUsuarios.png)
 
-2. Instale as dependências do projeto
-
-```bash
-cd TC02-Front
-npm install
-```
-
-3. Execute o Front-End
-
-```bash
-npm run dev
-```
+### Cadastro Usuários ![Figura 6: Cadastro de Usuários](/telas/FormularioCriarUsuario.png)
