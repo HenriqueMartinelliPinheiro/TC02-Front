@@ -8,7 +8,7 @@ Repositório para um protótipo de um front-end para gerenciamento de frequênci
 
 ### Lista de Eventos ![Figura 3: Listagem de Eventos](/telas/listaEventosAdmin.png)
 
-### Cadastro Eventos ![Figura 4: Cadastro de Eventos](/telas/FormularioCriarUsuario.png)
+### Cadastro Eventos ![Figura 4: Cadastro de Eventos](/telas/criacaoEventosAdmin.png)
 
 ### Listagem de Usuários ![Figura 5: Listagem de Usuários](/telas/listagemUsuarios.png)
 
